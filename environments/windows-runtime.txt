@@ -1,0 +1,3 @@
+# PENDING environment audit and a verified camera smoke test.
+# No tested dependency pins yet. This file currently installs nothing.
+# Record the selected Python version here when validated.

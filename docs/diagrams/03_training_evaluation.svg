@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1460" viewBox="0 0 1500 1460" role="img" aria-labelledby="title desc">
+<title id="title">Training and testing without leaking answers</title><desc id="desc">Split by person and keep related recordings together. Never tune the combination on final-test outcomes.</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth"><path d="M0 0 L9 4.5 L0 9Z" fill="#7890a5"/></marker></defs>
+<rect width="1500" height="100%" fill="#f7f9fc"/>
+<rect width="1500" height="12" fill="#142c43"/>
+<text x="52" y="62" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="600" fill="#087f81" text-anchor="start">MARVEL  /  DESIGN 03</text>
+<text x="52" y="112" font-family="Segoe UI, Arial, sans-serif" font-size="35" font-weight="700" fill="#142c43" text-anchor="start">Training and testing without leaking answers</text>
+<text x="52" y="151" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="400" fill="#4b6379" text-anchor="start">Split by person and keep related recordings together. Never tune the combination on final-test outcomes.</text>
+<rect x="330" y="200" width="840" height="130" rx="14" fill="#ffffff" stroke="#d6e0ea" stroke-width="1.4"/>
+<rect x="330" y="216" width="5" height="98" rx="2" fill="#2366a2"/>
+<text x="353" y="233" font-family="Segoe UI, Arial, sans-serif" font-size="23" font-weight="600" fill="#142c43" text-anchor="start">Audit the dataset before training</text>
+<text x="353" y="264" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="400" fill="#4b6379" text-anchor="start">Full-frame paired evaluation + eye labels + timestamps + subject IDs</text>
+<text x="353" y="291" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="400" fill="#4b6379" text-anchor="start">Eye-only training data may be useful, but may not support the EAR baseline</text>
+<path d="M750,330 L750,365" fill="none" stroke="#7890a5" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="330" y="370" width="840" height="110" rx="14" fill="#ffffff" stroke="#d6e0ea" stroke-width="1.4"/>
+<rect x="330" y="386" width="5" height="78" rx="2" fill="#2366a2"/>
+<text x="353" y="403" font-family="Segoe UI, Arial, sans-serif" font-size="23" font-weight="600" fill="#142c43" text-anchor="start">Freeze a grouped split manifest</text>
+<text x="353" y="434" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="400" fill="#4b6379" text-anchor="start">Parent frames, both eyes, crops and augmentations inherit the same partition</text>
+<path d="M750,480 L750,520 L220,520 L220,555" fill="none" stroke="#7890a5" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M750,480 L750,520 L590,520 L590,555" fill="none" stroke="#7890a5" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M750,480 L750,520 L960,520 L960,555" fill="none" stroke="#7890a5" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M750,480 L750,520 L1330,520 L1330,555" fill="none" stroke="#7890a5" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="55" y="560" width="330" height="180" rx="14" fill="#ffffff" stroke="#d6e0ea" stroke-width="1.4"/>
+<rect x="55" y="576" width="5" height="148" rx="2" fill="#087f81"/>
+<text x="78" y="593" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#087f81" text-anchor="start">LEARN PARAMETERS</text>
+<text x="78" y="626" font-family="Segoe UI, Arial, sans-serif" font-size="23" font-weight="600" fill="#142c43" text-anchor="start">Training</text>
+<text x="78" y="657" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="400" fill="#4b6379" text-anchor="start">Learn CNN weights</text>
+<text x="78" y="684" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="400" fill="#4b6379" text-anchor="start">Augmentation here only</text>
+<text x="78" y="711" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="400" fill="#4b6379" text-anchor="start">Save candidate checkpoints</text>
+<rect x="425" y="560" width="330" height="180" rx="14" fill="#ffffff" stroke="#d6e0ea" stroke-width="1.4"/>
+<rect x="425" y="576" width="5" height="148" rx="2" fill="#7151a3"/>
+<text x="448" y="593" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#7151a3" text-anchor="start">MAKE SCORES COMPARABLE</text>
+<text x="448" y="626" font-family="Segoe UI, Arial, sans-serif" font-size="23" font-weight="600" fill="#142c43" text-anchor="start">Calibration</text>
+<text x="448" y="657" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="400" fill="#4b6379" text-anchor="start">Fit EAR score mapping</text>
+<text x="448" y="684" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="400" fill="#4b6379" text-anchor="start">Check CNN probabilities</text>
+<text x="448" y="711" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="400" fill="#4b6379" text-anchor="start">Keep subjects separate</text>
+<rect x="795" y="560" width="330" height="180" rx="14" fill="#ffffff" stroke="#d6e0ea" stroke-width="1.4"/>
+<rect x="795" y="576" width="5" height="148" rx="2" fill="#a25e19"/>
+<text x="818" y="593" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#a25e19" text-anchor="start">SELECT SETTINGS</text>
+<text x="818" y="626" font-family="Segoe UI, Arial, sans-serif" font-size="23" font-weight="600" fill="#142c43" text-anchor="start">Validation</text>
+<text x="818" y="657" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="400" fill="#4b6379" text-anchor="start">Choose model and alpha</text>
+<text x="818" y="684" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="400" fill="#4b6379" text-anchor="start">Choose operating thresholds</text>
+<text x="818" y="711" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="400" fill="#4b6379" text-anchor="start">Choose temporal settings</text>
+<rect x="1165" y="560" width="330" height="180" rx="14" fill="#ffffff" stroke="#d6e0ea" stroke-width="1.4"/>
+<rect x="1165" y="576" width="5" height="148" rx="2" fill="#2366a2"/>
+<text x="1188" y="593" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#2366a2" text-anchor="start">MEASURE GENERALIZATION</text>
+<text x="1188" y="626" font-family="Segoe UI, Arial, sans-serif" font-size="23" font-weight="600" fill="#142c43" text-anchor="start">Final test</text>
+<text x="1188" y="657" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="400" fill="#4b6379" text-anchor="start">Keep labels untouched</text>
+<text x="1188" y="684" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="400" fill="#4b6379" text-anchor="start">Evaluate frozen choices</text>
+<text x="1188" y="711" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="400" fill="#4b6379" text-anchor="start">No tuning from outcomes</text>
+<rect x="45" y="800" width="1410" height="250" rx="18" fill="#e9f5f3"/>
+<text x="65" y="831" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#087f81" text-anchor="start">DEVELOPMENT OUTPUTS  /  FROM TRAINING, CALIBRATION AND VALIDATION ONLY</text>
+<rect x="75" y="865" width="390" height="140" rx="14" fill="#ffffff" stroke="#d6e0ea" stroke-width="1.4"/>
+<rect x="75" y="881" width="5" height="108" rx="2" fill="#087f81"/>
+<text x="98" y="898" font-family="Segoe UI, Arial, sans-serif" font-size="23" font-weight="600" fill="#142c43" text-anchor="start">Model artefacts</text>
+<text x="98" y="929" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="400" fill="#4b6379" text-anchor="start">Selected CNN checkpoint</text>
+<text x="98" y="956" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="400" fill="#4b6379" text-anchor="start">Architecture and class mapping</text>
+<rect x="555" y="865" width="390" height="140" rx="14" fill="#ffffff" stroke="#d6e0ea" stroke-width="1.4"/>
+<rect x="555" y="881" width="5" height="108" rx="2" fill="#087f81"/>
+<text x="578" y="898" font-family="Segoe UI, Arial, sans-serif" font-size="23" font-weight="600" fill="#142c43" text-anchor="start">Decision artefacts</text>
+<text x="578" y="929" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="400" fill="#4b6379" text-anchor="start">EAR map, optional CNN calibration</text>
+<text x="578" y="956" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="400" fill="#4b6379" text-anchor="start">Alpha, thresholds and timing rules</text>
+<rect x="1035" y="865" width="390" height="140" rx="14" fill="#ffffff" stroke="#d6e0ea" stroke-width="1.4"/>
+<rect x="1035" y="881" width="5" height="108" rx="2" fill="#087f81"/>
+<text x="1058" y="898" font-family="Segoe UI, Arial, sans-serif" font-size="23" font-weight="600" fill="#142c43" text-anchor="start">Frozen release bundle</text>
+<text x="1058" y="929" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="400" fill="#4b6379" text-anchor="start">Input transform and checksums</text>
+<text x="1058" y="956" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="400" fill="#4b6379" text-anchor="start">Versions, split ID, hardware target</text>
+<path d="M220,740 L220,860" fill="none" stroke="#7890a5" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M590,740 L590,770 L750,770 L750,860" fill="none" stroke="#7890a5" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M960,740 L960,770 L750,770" fill="none" stroke="#7890a5" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M465,935 L550,935" fill="none" stroke="#7890a5" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M945,935 L1030,935" fill="none" stroke="#7890a5" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="290" y="1120" width="920" height="160" rx="14" fill="#ffffff" stroke="#d6e0ea" stroke-width="1.4"/>
+<rect x="290" y="1136" width="5" height="128" rx="2" fill="#2366a2"/>
+<text x="313" y="1153" font-family="Segoe UI, Arial, sans-serif" font-size="23" font-weight="600" fill="#142c43" text-anchor="start">Final comparison: EAR vs CNN vs combined</text>
+<text x="313" y="1184" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="400" fill="#4b6379" text-anchor="start">Same held-out observations and labelled videos; identical temporal policy</text>
+<text x="313" y="1211" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="400" fill="#4b6379" text-anchor="start">Report eye-state quality, observation coverage, event misses and false alerts</text>
+<text x="313" y="1238" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="400" fill="#4b6379" text-anchor="start">Also report Jetson latency, frame age, memory and difficult-condition slices</text>
+<path d="M1230,1005 L1230,1080 L940,1080 L940,1115" fill="none" stroke="#7890a5" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M1330,740 L1470,740 L1470,1085 L1100,1085 L1100,1115" fill="none" stroke="#7890a5" stroke-width="2.3" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="1240" y="1070" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="500" fill="#4b6379" text-anchor="start">Test data</text>
+<text x="75" y="1350" font-family="Segoe UI, Arial, sans-serif" font-size="23" font-weight="500" fill="#142c43" text-anchor="start">Fusion can lose. Preserve all three results and explain the tradeoff instead of forcing a win.</text>
+<line x1="52" y1="1392" x2="1448" y2="1392" stroke="#d6e0ea"/>
+<text x="52" y="1425" font-family="Segoe UI, Arial, sans-serif" font-size="17" font-weight="400" fill="#4b6379" text-anchor="start">If subjects are too few for these partitions, use grouped development folds and an untouched outer test; report limitations.</text>
+</svg>
