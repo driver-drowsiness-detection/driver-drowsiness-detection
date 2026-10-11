@@ -69,4 +69,32 @@ def test_small_crop_is_rejected():
     crop = np.zeros((5, 30, 3), np.uint8)
     result = crop_validity(crop, None, 8)
     assert not result.valid and result.reasons == ("crop_too_small",)
-        
+
+def test_fractional_box_is_expanded_outward():
+    image = make_image()
+    crop, reason = crop_box(image, (2.5, 3.5, 7.2, 8.1))
+    assert reason is None and crop.shape == (6, 6, 3)
+    assert np.array_equal(crop, image[3:9, 2:8])
+
+
+def test_box_covering_whole_image_is_valid():
+    image = make_image()
+    crop, reason = crop_box(image, (0, 0, 12, 10))
+    assert reason is None and np.array_equal(crop, image)
+
+
+def test_grayscale_image_is_rejected():
+    crop, reason = crop_box(np.zeros((10, 12), np.uint8), (1, 1, 5, 5))
+    assert crop is None and reason == "unexpected_image_shape"
+
+
+def test_box_with_wrong_length_is_rejected():
+    crop, reason = crop_box(make_image(), (1, 2, 3))
+    assert crop is None and reason == "invalid_box"
+
+
+def test_rows_come_before_columns():
+    image = make_image()
+    crop, reason = crop_box(image, (4, 1, 9, 3))   # left, top, right, bottom
+    assert reason is None and crop.shape == (2, 5, 3)
+    assert np.array_equal(crop[0, 0], image[1, 4])  # point x=4, y=1
