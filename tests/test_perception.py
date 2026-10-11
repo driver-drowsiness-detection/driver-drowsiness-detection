@@ -4,6 +4,7 @@ import pytest
 from marvel.perception.contracts import FramePacket, make_synthetic_packet, packet_problem
 from marvel.perception.crops import crop_box
 from marvel.perception.quality import crop_validity
+from marvel.perception.quality import (EyeObservation, Validity, combine_eye_validity, crop_validity)
 
 def test_synthetic_packet_is_labelled_and_carries_its_own_pixels():
     p = make_synthetic_packet(7)
@@ -98,3 +99,21 @@ def test_rows_come_before_columns():
     crop, reason = crop_box(image, (4, 1, 9, 3))   # left, top, right, bottom
     assert reason is None and crop.shape == (2, 5, 3)
     assert np.array_equal(crop[0, 0], image[1, 4])  # point x=4, y=1
+
+def test_no_face_makes_both_invalid():
+    good = Validity(True)
+    obs = combine_eye_validity(False, good, good)
+    assert obs.geometry.reasons == ("no_face",)
+    assert obs.crop.reasons == ("no_face",)
+
+
+def test_geometry_can_fail_while_crop_is_valid():
+    bad_geometry = Validity(False, ("zero_eye_width",))
+    obs = combine_eye_validity(True, bad_geometry, Validity(True))
+    assert not obs.geometry.valid and obs.crop.valid
+
+
+def test_crop_can_fail_while_geometry_is_valid():
+    bad_crop = Validity(False, ("crop_too_small",))
+    obs = combine_eye_validity(True, Validity(True), bad_crop)
+    assert obs.geometry.valid and not obs.crop.valid
