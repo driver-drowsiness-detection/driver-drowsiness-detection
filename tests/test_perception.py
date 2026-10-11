@@ -3,6 +3,7 @@ import pytest
 
 from marvel.perception.contracts import FramePacket, make_synthetic_packet, packet_problem
 from marvel.perception.crops import crop_box
+from marvel.perception.quality import crop_validity
 
 def test_synthetic_packet_is_labelled_and_carries_its_own_pixels():
     p = make_synthetic_packet(7)
@@ -46,3 +47,26 @@ def test_crop_is_independent_of_original():
     before = crop.copy()
     image[:] = 0
     assert np.array_equal(crop, before)
+
+def test_valid_crop_has_no_reasons():
+    crop = np.zeros((20, 30, 3), np.uint8)
+    result = crop_validity(crop, None, 8)
+    assert result.valid and result.reasons == ()
+
+
+def test_missing_crop_keeps_its_reason():
+    result = crop_validity(None, "box_outside_or_empty", 8)
+    assert not result.valid
+    assert result.reasons == ("box_outside_or_empty",)
+
+
+def test_missing_crop_without_reason_uses_no_crop():
+    result = crop_validity(None, None, 8)
+    assert result.reasons == ("no_crop",)
+
+
+def test_small_crop_is_rejected():
+    crop = np.zeros((5, 30, 3), np.uint8)
+    result = crop_validity(crop, None, 8)
+    assert not result.valid and result.reasons == ("crop_too_small",)
+        
