@@ -1,30 +1,35 @@
 import numpy as np
 import pytest
 
-from marvel.perception.contracts import FramePacket, make_synthetic_packet, packet_problem
+from marvel.contracts import Frame
+from marvel.perception.quality import frame_problem
 from marvel.perception.crops import crop_box
 from marvel.perception.quality import crop_validity
 from marvel.perception.quality import (EyeObservation, Validity, combine_eye_validity, crop_validity)
 
-def test_synthetic_packet_is_labelled_and_carries_its_own_pixels():
-    p = make_synthetic_packet(7)
-    assert p.synthetic and p.frame_id == 7
-    assert p.image[0, 0, 0] == 7
-    assert packet_problem(p) is None
+def make_synthetic_frame(index):
+    return Frame("synthetic:" + str(index), index / 30.0,
+                 np.full((48, 64, 3), index % 256, np.uint8))
+
+
+def test_synthetic_fixture_is_labelled_and_carries_its_own_pixels():
+    p = make_synthetic_frame(7)
+    assert p.sample_id == "synthetic:7" and p.image[0, 0, 0] == 7
+    assert frame_problem(p) is None
 
 
 def test_non_increasing_ids_and_times_are_rejected():
-    a, b = make_synthetic_packet(1), make_synthetic_packet(1)
-    assert packet_problem(b, previous=a) == "non_increasing_frame_id"
-    late = FramePacket("synthetic", 2, 0.0, 0.0, a.image)
-    assert packet_problem(late, previous=a) == "non_increasing_time"
+    a, b = make_synthetic_frame(1), make_synthetic_frame(1)
+    assert frame_problem(b, previous=a) == "repeated_frame"
+    late = Frame("synthetic:2", 0.0, a.image)
+    assert frame_problem(late, previous=a) == "non_increasing_time"
 
 
 def test_empty_and_nonfinite_rejected():
-    empty = FramePacket("s", 0, 0.0, 0.0, np.zeros((0, 0, 3), np.uint8))
-    assert packet_problem(empty) == "empty_frame"
-    nan = FramePacket("s", 0, float("nan"), 0.0, np.zeros((4, 4, 3), np.uint8))
-    assert packet_problem(nan) == "nonfinite_time"
+    empty = Frame("s", 0.0, np.zeros((0, 0, 3), np.uint8))
+    assert frame_problem(empty) == "empty_frame"
+    nan = Frame("s", float("nan"), np.zeros((4, 4, 3), np.uint8))
+    assert frame_problem(nan) == "invalid_frame_identity_or_time"
 
 def make_image():
     return np.arange(10 * 12 * 3, dtype=np.uint8).reshape(10, 12, 3)

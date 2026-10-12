@@ -1,6 +1,27 @@
 import math
 
 
+def eye_box(points):
+    """Rectangle from corner width, so a closed eyelid retains crop area."""
+    try:
+        if len(points) != 6 or not all(math.isfinite(x) and math.isfinite(y) for x, y in points):
+            return None
+        eye_width = math.hypot(points[0][0] - points[3][0], points[0][1] - points[3][1])
+        if eye_width < 2:
+            return None
+        cx = (points[0][0] + points[3][0]) / 2
+        cy = (points[0][1] + points[3][1]) / 2
+        return (math.floor(cx - 0.8 * eye_width), math.floor(cy - 0.4 * eye_width),
+                math.ceil(cx + 0.8 * eye_width), math.ceil(cy + 0.4 * eye_width))
+    except (TypeError, ValueError):
+        return None
+
+
+def eye_crop(image, points):
+    box = eye_box(points)
+    return None if box is None else crop_box(image, box)[0]
+
+
 def crop_box(image, box):
     if image is None or image.size == 0:
         return None, "empty_frame"
