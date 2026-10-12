@@ -1,5 +1,9 @@
 # Team setup and first deliverables
 
+> Historical scaffold guide. For the implemented camera/eye endpoint, use the
+> current [README](../README.md) and [two-person perception workflow](PERCEPTION_TEAM_WORKFLOW.md).
+> The pending-state statements below describe September's starting point.
+
 Updated 12 September 2026. This guide supplements the existing Phase 1 design and records Vishruth's requested senior ML pair and independent junior runtime pair. This guide describes the migration branch and ownership plan. Organization permissions and project-board setup are separate from this scaffold migration.
 
 ## 1. What exists now

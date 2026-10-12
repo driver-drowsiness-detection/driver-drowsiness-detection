@@ -1,0 +1,24 @@
+name: Perception checks
+on:
+  push:
+    branches: [main, perception, perception01, 'codex/perception-*']
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: environments/windows-perception-lock.txt
+      - run: python -m pip install -r environments/windows-perception-lock.txt
+      - run: python -m pip check
+      - run: python scripts/download_landmarker.py
+      - run: python -m pytest -q
+        env:
+          MARVEL_TEST_MODEL: models/face_landmarker.task
