@@ -7,6 +7,8 @@ Branch: `codex/ear-cognition`; base: `final-perception` at `63ddcc1`.
 
 `Eye` -> `measure(eye)` -> raw `Estimate(method="ear")`.
 No camera, MediaPipe, NumPy or CNN is imported by the geometry modules.
+Local verification: 61 tests passed with the real landmark asset enabled.
+The separate GitHub EAR geometry check also passed on the implementation commit.
 Six original-image pixel points use corners 0/3 and vertical pairs 1/5, 2/4.
 EAR = (distance(1,5) + distance(2,4)) / (2 * distance(0,3)).
 The minimum corner width is 2 pixels. Invalid/degenerate/nonfinite geometry

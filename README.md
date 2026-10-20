@@ -1,4 +1,11 @@
-# MARVEL camera and eye perception
+# MARVEL EAR and perception development
+
+Vishruth's EAR implementation and commands: [EAR handoff](docs/EAR_COGNITION.md).
+Branch: `codex/ear-cognition`; Arushi develops CNN on `cnn`.
+Raw EAR and invalid-input handling are implemented. Fitted thresholds,
+personal calibration and temporal drowsiness logic remain pending real data.
+
+## Existing camera and eye perception
 
 The integrated perception demo acquires live BGR frames, detects one face, extracts
 six points and a crop for each eye, checks usability and freshness, and shows the
@@ -19,21 +26,21 @@ Save/commit any existing work on its own branch before switching. From your clon
 ```powershell
 git status --short
 git fetch origin
-git switch --track origin/codex/perception-integration
-git pull --ff-only origin codex/perception-integration
+git switch --track origin/codex/ear-cognition
+git pull --ff-only origin codex/ear-cognition
 git rev-parse HEAD
 ```
 
-If that local branch already exists, use `git switch codex/perception-integration`.
+If that local branch already exists, use `git switch codex/ear-cognition`.
 Compare the final commit on all machines. For a new clone:
 
 ```powershell
-git clone --branch codex/perception-integration https://github.com/driver-drowsiness-detection/driver-drowsiness-detection.git
+git clone --branch codex/ear-cognition https://github.com/driver-drowsiness-detection/driver-drowsiness-detection.git
 cd driver-drowsiness-detection
 ```
 
-The integration PR targets main. The existing contributors' branches retain their
-history. After the PR is merged, main becomes the shared endpoint.
+The integrated perception base is `final-perception`; its original PR was closed
+without merging. This EAR branch includes that base. Main is still a scaffold.
 
 ## Windows setup
 
