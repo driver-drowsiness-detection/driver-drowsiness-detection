@@ -1,0 +1,23 @@
+name: EAR cognition checks
+on:
+  push:
+    branches: ['codex/ear-*']
+  pull_request:
+    paths:
+      - 'src/marvel/cognition/features.py'
+      - 'src/marvel/cognition/ear_classifier.py'
+      - 'tests/test_ear_cognition.py'
+      - 'scripts/inspect_ear.py'
+      - '.github/workflows/ear.yml'
+permissions:
+  contents: read
+jobs:
+  geometry:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install pytest==8.3.5
+      - run: python -m pytest -q tests/test_ear_cognition.py -k "not saved_image_cli"
