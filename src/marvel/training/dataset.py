@@ -13,9 +13,12 @@ REQUIRED = {
 
 
 def read_manifest(path: str | Path) -> list[dict[str, str]]:
-    """Read a CSV and reject data leakage or non-independent labels early."""
-    with Path(path).open(newline="", encoding="utf-8-sig") as handle:
+    """Validate independent labels; relative image paths are manifest-relative."""
+    path = Path(path).resolve()
+    with path.open(newline="", encoding="utf-8-sig") as handle:
         reader = csv.DictReader(handle)
+        if len(reader.fieldnames or []) != len(set(reader.fieldnames or [])):
+            raise ValueError("Duplicate manifest columns")
         fieldnames = set(reader.fieldnames or [])
         missing = REQUIRED - fieldnames
         if missing:
@@ -27,7 +30,16 @@ def read_manifest(path: str | Path) -> list[dict[str, str]]:
     seen: set[tuple[str, str]] = set()
     ownership: dict[tuple[str, str], str] = {}
     frame_splits: dict[str, str] = {}
+    samples = {}
     for row in rows:
+        if None in row or any(v is None for v in row.values()):
+            raise ValueError("Malformed CSV row")
+        row.update({k: v.strip() for k, v in row.items()})
+        if not row["sample_id"] or not row["frame_path"]:
+            raise ValueError("Missing sample ID or frame path")
+        for field in ("frame_path", "crop_path"):
+            if row.get(field):
+                row[field] = str((path.parent / Path(row[field])).resolve())
         sample_eye = (row["sample_id"], row["eye_side"])
         if sample_eye in seen or row["eye_side"] not in ("left", "right"):
             raise ValueError("Duplicate sample/eye or wrong eye side")
@@ -42,10 +54,12 @@ def read_manifest(path: str | Path) -> list[dict[str, str]]:
             raise ValueError("Invalid timestamp")
         if row["observable"] == "1" and row["label"] not in ("0", "1"):
             raise ValueError("Observable samples need independent 0/1 eye labels")
+        if row["observable"] == "0" and row["label"] != "":
+            raise ValueError("Unobservable eyes must have a blank binary label")
         if row["label_source"] not in ("human", "dataset_eye_annotation"):
             raise ValueError("EAR-generated labels are not independent ground truth")
         for field in ("source", "subject_id", "session_id", "video_id"):
-            if not row[field]:
+            if not row[field] or row[field].lower() in {"undecided", "unknown", "pending"}:
                 raise ValueError("Missing grouping identity: " + field)
         for field in ("subject_id", "session_id", "video_id"):
             key = (field, row[field])
@@ -56,6 +70,12 @@ def read_manifest(path: str | Path) -> list[dict[str, str]]:
         if frame in frame_splits and frame_splits[frame] != row["split"]:
             raise ValueError("Same frame in different partitions")
         frame_splits[frame] = row["split"]
+        identity = tuple(row[k] for k in (
+            "subject_id", "session_id", "video_id", "source", "split", "frame_path"
+        )) + (timestamp,)
+        if row["sample_id"] in samples and samples[row["sample_id"]] != identity:
+            raise ValueError("Two eyes of a sample disagree on frame identity")
+        samples[row["sample_id"]] = identity
     return rows
 
 

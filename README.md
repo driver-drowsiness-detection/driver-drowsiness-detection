@@ -1,4 +1,11 @@
-# MARVEL camera and eye perception
+# MARVEL CNN and perception development
+
+CNN setup and commands: [CNN quickstart](docs/CNN_QUICKSTART.md).
+GitHub audit, dataset status and completion plan: [Cognition plan](docs/COGNITION_PLAN.md).
+Arushi works on `cnn`; Vishruth works on `codex/ear-cognition`.
+No real dataset has been downloaded or eye classifier trained yet.
+
+## Existing camera and eye perception
 
 The integrated perception demo acquires live BGR frames, detects one face, extracts
 six points and a crop for each eye, checks usability and freshness, and shows the
@@ -19,21 +26,22 @@ Save/commit any existing work on its own branch before switching. From your clon
 ```powershell
 git status --short
 git fetch origin
-git switch --track origin/codex/perception-integration
-git pull --ff-only origin codex/perception-integration
+git switch --track origin/cnn
+git pull --ff-only origin cnn
 git rev-parse HEAD
 ```
 
-If that local branch already exists, use `git switch codex/perception-integration`.
+If that local branch already exists, use `git switch cnn`.
 Compare the final commit on all machines. For a new clone:
 
 ```powershell
-git clone --branch codex/perception-integration https://github.com/driver-drowsiness-detection/driver-drowsiness-detection.git
+git clone --branch cnn https://github.com/driver-drowsiness-detection/driver-drowsiness-detection.git
 cd driver-drowsiness-detection
 ```
 
-The integration PR targets main. The existing contributors' branches retain their
-history. After the PR is merged, main becomes the shared endpoint.
+The integrated perception base is `final-perception`; its original PR was closed
+without merging. This CNN branch includes that base and preserves both
+contributors' histories. Main still contains the scaffold.
 
 ## Windows setup
 
@@ -121,4 +129,5 @@ Canonical shared records: src/marvel/contracts.py. Person 1 owns acquisition;
 Person 2 owns landmarks, eye cropping and quality. Both own preview integration.
 The source branch histories and retained tests are described in the comparison
 document. CNN training and the application-wide cognition pipeline remain outside
-this perception integration. The older baseline is preserved in legacy/phase1_initial.
+the original perception integration. See the cognition links above for the
+current CNN work. The older baseline is preserved in legacy/phase1_initial.

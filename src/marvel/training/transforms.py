@@ -25,6 +25,8 @@ def array_from_bgr(crop: np.ndarray) -> np.ndarray:
     """Apply exactly the training path to an OpenCV BGR crop."""
     if not isinstance(crop, np.ndarray) or crop.ndim != 3 or crop.shape[2] != 3:
         raise ValueError("Expected a non-empty BGR image with three channels")
+    if crop.dtype != np.uint8:
+        raise ValueError("Expected uint8 BGR pixels")
     if crop.shape[0] == 0 or crop.shape[1] == 0:
         raise ValueError("Cannot preprocess an empty eye crop")
     return array_from_image(Image.fromarray(crop[:, :, ::-1].copy()))

@@ -1,6 +1,7 @@
 # Local Python environments and generated files
 .venv/
 .venv-perception/
+.venv-cognition/
 reports/local/
 configs/local-*.yaml
 venv/

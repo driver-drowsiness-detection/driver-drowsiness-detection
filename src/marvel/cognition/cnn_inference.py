@@ -14,6 +14,8 @@ def sha256(path: str | Path) -> str:
 
 def _sigmoid(value: float) -> float:
     """Numerically stable conversion from a logit to a closure probability."""
+    if not math.isfinite(value):
+        raise ValueError("Logit must be finite")
     if value >= 0:
         return 1.0 / (1.0 + math.exp(-value))
     exp_value = math.exp(value)
@@ -26,8 +28,8 @@ class CNN:
         from .cnn_architecture import EyeCNN
         from marvel.training.transforms import PREPROCESS
 
-        if temperature <= 0:
-            raise ValueError("Temperature must be positive")
+        if not math.isfinite(temperature) or temperature <= 0:
+            raise ValueError("Temperature must be finite and positive")
         saved = torch.load(checkpoint, map_location="cpu", weights_only=True)
         if saved.get("class_map") != {"open": 0, "closed": 1}:
             raise ValueError("Checkpoint class mapping does not match the runtime contract")
@@ -46,10 +48,24 @@ class CNN:
             return float(self.model(x).item())
 
     def estimate(self, eye) -> Estimate:
-        value = _sigmoid(self.logit(eye.crop) / self.temperature) if eye.crop_ok else None
+        reason, value = "", None
+        if not eye.crop_ok:
+            reason = "crop_quality"
+        else:
+            from marvel.training.transforms import array_from_bgr
+            try:
+                array_from_bgr(eye.crop)
+            except (ValueError, TypeError):
+                reason = "crop_format"
+            else:
+                logit = self.logit(eye.crop) / self.temperature
+                if math.isfinite(logit):
+                    value = _sigmoid(logit)
+                else:
+                    reason = "nonfinite_logit"
         return Estimate(
             eye.sample_id, eye.t, eye.track, eye.side, "cnn", value,
-            value is not None, "" if value is not None else "crop_quality",
+            value is not None, reason,
         )
 
 
@@ -72,8 +88,8 @@ class OpenCVCNN(CNN):
         import cv2
         from marvel.training.transforms import PREPROCESS
 
-        if temperature <= 0:
-            raise ValueError("Temperature must be positive")
+        if not math.isfinite(temperature) or temperature <= 0:
+            raise ValueError("Temperature must be finite and positive")
         onnx_path = Path(onnx_path)
         metadata = json.loads(Path(str(onnx_path) + ".json").read_text(encoding="utf-8"))
         if (metadata.get("checkpoint_sha256") != checkpoint_hash

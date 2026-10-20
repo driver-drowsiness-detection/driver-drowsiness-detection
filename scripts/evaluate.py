@@ -4,9 +4,9 @@ Usage: python scripts/evaluate.py prepared.csv models/eye.pt test reports/cnn_te
 """
 
 import json
-import math
 import sys
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from marvel.training.dataset import binary_rows, read_manifest
 
@@ -33,13 +33,16 @@ def main(argv: list[str] | None = None) -> None:
     if len(argv) != 5:
         raise SystemExit("Usage: evaluate.py PREPARED.csv CHECKPOINT.pt SPLIT REPORT.json DEVICE")
     manifest, checkpoint, split, report, device = argv
+    if Path(report).exists():
+        raise FileExistsError(report)
     if split not in {"validation", "test"}:
         raise ValueError("Evaluate only a frozen validation or test partition")
 
     import cv2
-    from marvel.cognition.cnn_inference import CNN, sha256
+    from marvel.cognition.cnn_inference import CNN, sha256, _sigmoid
 
-    rows = binary_rows(read_manifest(manifest), split)
+    partition = [r for r in read_manifest(manifest) if r["split"] == split]
+    rows = binary_rows(partition, split)
     model = CNN(checkpoint, device=device)
     labels, predictions, scores = [], [], []
     for row in rows:
@@ -47,7 +50,7 @@ def main(argv: list[str] | None = None) -> None:
         if crop is None:
             raise ValueError("Unreadable prepared crop: " + row["crop_path"])
         logit = model.logit(crop)
-        score = 1.0 / (1.0 + math.exp(-logit))
+        score = _sigmoid(logit)
         labels.append(int(row["label"]))
         predictions.append(int(score >= 0.5))
         scores.append(score)
@@ -60,11 +63,16 @@ def main(argv: list[str] | None = None) -> None:
         "manifest": str(Path(manifest)),
         "manifest_sha256": sha256(manifest),
         "threshold": 0.5,
+        "threshold_status": "unvalidated_baseline",
+        "total_rows": len(partition),
+        "observable_rows": sum(r["observable"] == "1" for r in partition),
+        "coverage_observable": len(rows) / sum(r["observable"] == "1" for r in partition),
         "mean_closed_score": sum(scores) / len(scores),
     })
     report_path = Path(report)
     report_path.parent.mkdir(parents=True, exist_ok=True)
-    report_path.write_text(json.dumps(result, indent=2), encoding="utf-8")
+    with report_path.open("x", encoding="utf-8") as handle:
+        json.dump(result, handle, indent=2, allow_nan=False)
     print(json.dumps(result, indent=2))
 
 
