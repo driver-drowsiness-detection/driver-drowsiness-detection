@@ -1,5 +1,10 @@
 # MARVEL team environment setup
 
+> Historical setup plan. The current perception implementation and tested Windows
+> dependency lock are documented in [README](../README.md). Its separate
+> `.venv-perception` avoids changing CNN environments. For the Nano use
+> [JETSON_PERCEPTION.md](JETSON_PERCEPTION.md); Windows pins do not apply there.
+
 ## Purpose
 
 This guide starts from the first repository check and ends when all four laptops have reproducible local environments. It also defines the separate Jetson Nano audit. Follow the steps in order.

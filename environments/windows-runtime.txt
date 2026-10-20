@@ -1,3 +1,4 @@
-# PENDING environment audit and a verified camera smoke test.
-# No tested dependency pins yet. This file currently installs nothing.
-# Record the selected Python version here when validated.
+# Windows x86-64, Python 3.11 perception environment (includes its test runner).
+# See README and docs/PERCEPTION_INTEGRATION.md for measured validation limits.
+# Use a separate environment; do not install this file on Jetson.
+-r windows-perception-lock.txt

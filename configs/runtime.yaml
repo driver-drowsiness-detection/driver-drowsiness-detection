@@ -1,3 +1,15 @@
-# Scaffold only. Pending: source, mode, thresholds, timing and quality policy.
-# No measured operating settings exist yet.
-{}
+# Development demo settings; camera and quality thresholds require local review.
+capture:
+  kind: camera
+  source: 0
+
+landmarker: models/face_landmarker.task
+driver_roi: [0.0, 0.0, 1.0, 1.0]
+max_frame_age_s: 1.0
+capture_timeout_s: 10.0
+
+quality:
+  min_crop_pixels: 8
+  brightness_min: 10
+  brightness_max: 245
+  laplacian_min: 0.0  # Reports sharpness; rejection disabled until measured.

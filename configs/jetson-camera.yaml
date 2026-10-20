@@ -1,0 +1,13 @@
+# Candidate for the inspected Jetson stack, not a validated hardware lock.
+capture:
+  kind: gstreamer
+  source: "nvarguscamerasrc sensor-id=0 ! nvvidconv ! video/x-raw,format=BGRx ! videoconvert ! video/x-raw,format=BGR ! appsink max-buffers=1 drop=true sync=false"
+landmarker: models/face_landmarker.task
+driver_roi: [0.0, 0.0, 1.0, 1.0]
+max_frame_age_s: 1.0
+capture_timeout_s: 10.0
+quality:
+  min_crop_pixels: 8
+  brightness_min: 10
+  brightness_max: 245
+  laplacian_min: 0.0
