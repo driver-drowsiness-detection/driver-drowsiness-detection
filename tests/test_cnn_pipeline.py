@@ -115,8 +115,11 @@ def test_cnn_preprocessing_color_parity_and_fail_closed():
         array_from_bgr(rgb.astype(float))
 
 
-def test_real_cpu_train_reload_evaluate(tmp_path):
+@pytest.mark.parametrize("device", ["cpu", "cuda"])
+def test_train_reload_evaluate(tmp_path, device):
     torch = pytest.importorskip("torch")
+    if device == "cuda" and not torch.cuda.is_available():
+        pytest.skip("CUDA GPU is not available in this environment")
     from marvel.cognition.cnn_inference import CNN
     rows = []
     for split_index, split in enumerate(("train", "validation", "test")):
@@ -132,8 +135,8 @@ def test_real_cpu_train_reload_evaluate(tmp_path):
     checkpoint, report = tmp_path / "model.pt", tmp_path / "report.json"
     env = dict(os.environ, OMP_NUM_THREADS="1", MKL_NUM_THREADS="1")
     for command in [
-        ["train_cnn.py", str(manifest), str(checkpoint), "1", "cpu"],
-        ["evaluate.py", str(manifest), str(checkpoint), "test", str(report), "cpu"],
+        ["train_cnn.py", str(manifest), str(checkpoint), "1", device],
+        ["evaluate.py", str(manifest), str(checkpoint), "test", str(report), device],
     ]:
         run = subprocess.run([sys.executable, str(ROOT / "scripts" / command[0]), *command[1:]],
                              cwd=tmp_path, capture_output=True, text=True, env=env, timeout=120)
@@ -141,7 +144,7 @@ def test_real_cpu_train_reload_evaluate(tmp_path):
     result = json.loads(report.read_text())
     assert result["n"] == 2 and result["coverage_observable"] == pytest.approx(2/3)
     assert result["threshold_status"] == "unvalidated_baseline"
-    model = CNN(checkpoint)
+    model = CNN(checkpoint, device=device)
     estimate = model.estimate(Eye("f", 0, "t", "left", (), np.zeros((32, 64, 3), np.uint8), True, True))
     assert estimate.valid and 0 <= estimate.value <= 1
     saved = torch.load(checkpoint, weights_only=True)

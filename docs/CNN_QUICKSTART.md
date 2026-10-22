@@ -1,5 +1,8 @@
 # CNN branch: run, prepare and train
 
+For the laptop CUDA setup, use [LAPTOP_GPU_TRAINING.md](LAPTOP_GPU_TRAINING.md).
+The environment instructions below describe the existing CPU setup.
+
 Read [COGNITION_PLAN.md](COGNITION_PLAN.md) for the verified project status,
 dataset access decisions, label rules, branch ownership and completion gates.
 The pipeline is ready for reviewed data; no trained eye model is supplied.
