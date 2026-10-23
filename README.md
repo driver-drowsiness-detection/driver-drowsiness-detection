@@ -1,9 +1,22 @@
-# MARVEL CNN and perception development
+# MARVEL cognition and perception development
 
 CNN setup and commands: [CNN quickstart](docs/CNN_QUICKSTART.md).
 GitHub audit, dataset status and completion plan: [Cognition plan](docs/COGNITION_PLAN.md).
-Arushi works on `cnn`; Vishruth works on `codex/ear-cognition`.
-No real dataset has been downloaded or eye classifier trained yet.
+Arushi works on `cnn`; Vishruth works on `ear-cognition`.
+Original CEW images are downloaded for inspection, but reviewed subject-disjoint
+training data and a real trained eye classifier remain pending.
+
+## Integrated EAR cognition
+
+[Cognition runtime](docs/COGNITION_RUNTIME.md) documents the runnable image/video/camera
+entry point, EAR decisions, MAR telemetry, rolling closure proxy, optional calibrated
+pose and Windows fixed audio. [Current status](docs/COGNITION_STATUS_AND_NEXT_STEPS.md)
+separates implemented features from remaining data, calibration, LLM and Jetson work.
+See [temporal controller notes](docs/TEMPORAL_CONTROLLER.md) for event behavior.
+
+The runtime requires an explicit experimental EAR threshold. Its rolling closure
+fraction is not yet validated P80 PERCLOS. Pose requires supplied calibration, and
+CNN/fusion and LLM speech are not yet connected to this application.
 
 ## Existing camera and eye perception
 
@@ -11,7 +24,7 @@ The integrated perception demo acquires live BGR frames, detects one face, extra
 six points and a crop for each eye, checks usability and freshness, and shows the
 results. It does not classify drowsiness or run EAR/CNN, alarms, or an LLM.
 
-Start here for the current executable endpoint. The older team/environment/design
+This remains the perception-only preview endpoint. The older team/environment/design
 guides describe the original scaffold and wider roadmap.
 
 - [Branch comparison and verified behavior](docs/PERCEPTION_INTEGRATION.md)

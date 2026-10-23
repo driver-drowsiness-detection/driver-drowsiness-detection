@@ -10,6 +10,8 @@ EYES = {
     "left": (362, 385, 387, 263, 373, 380),
     "right": (33, 160, 158, 133, 153, 144),
 }
+MOUTH = (78, 81, 311, 308, 402, 178)
+POSE = (1, 152, 33, 263, 61, 291)
 
 
 class MediaPipeBackend:
@@ -119,6 +121,16 @@ class Detector:
             ))
 
         status = "valid" if all(eye.crop_ok for eye in eyes) else "invalid_eye"
+        # Add named geometry without changing the established three-value API.
+        def coordinates(indices):
+            return tuple((landmarks[i].x * width, landmarks[i].y * height)
+                         for i in indices)
+        mouth, pose = coordinates(MOUTH), coordinates(POSE)
+        metrics["geometry"] = {
+            "sample_id": frame.sample_id, "t": frame.t, "track": track,
+            "mouth_points": mouth, "mouth_ok": points_ok(mouth, width, height),
+            "pose_points": pose, "pose_ok": points_ok(pose, width, height),
+        }
         return eyes, status, metrics
 
     def close(self):

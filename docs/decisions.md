@@ -1,5 +1,17 @@
 # Decision log
 
+## 2026-10-23: connect EAR and implement observable cognition measurements
+
+Used the reviewed EAR source from `origin/ear-cognition` at `f8cddad` because its geometry and identity behavior had already been checked. Integrated those files without a wholesale branch merge. Used elapsed-time interval accounting with explicit coverage because frame counts and missing observations can distort a rolling closure statistic. The output remains a binary closure proxy until a physical PERCLOS criterion is validated.
+
+Added MAR as telemetry, calibrated PnP as an optional measurement, and a bounded Windows fixed-sound worker. No camera intrinsics, trained CNN weights, calibration coefficients, fatigue cutoffs or LLM model were invented. Voice execution location remains an open user choice. Existing team ownership is preserved.
+
+## 2026-10-22: full proposal for the next review
+
+The user selected "Full proposal: also PERCLOS, head pose and LLM voice" and requested completion "by this week". These are review requirements rather than optional stretch work. The exact review day and Jetson access window are not yet confirmed. Keep implementation, measured detection quality and target-hardware evidence distinct; do not replace missing evidence with synthetic results or assumed compatibility.
+
+Used elapsed-time temporal tracking because the accepted design requires behavior independent of FPS, explicit unknown handling and recovery persistence. The first implementation adds typed events, a strict JSONL logger and synthetic replay. Demonstration durations are not accepted or validated production thresholds. It preserves the existing ownership split and does not select a new CNN or LLM architecture.
+
 ## 2026-09-12: scaffold from the revised target tree
 
 Used the existing Phase 1 tree because the team asked to create its listed paths before implementation. Files are explicitly pending, so structure cannot be mistaken for a working detector. Existing documents are retained.
