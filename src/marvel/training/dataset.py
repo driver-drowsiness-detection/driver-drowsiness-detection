@@ -41,17 +41,20 @@ def read_manifest(path: str | Path) -> list[dict[str, str]]:
             if row.get(field):
                 row[field] = str((path.parent / Path(row[field])).resolve())
         sample_eye = (row["sample_id"], row["eye_side"])
-        if sample_eye in seen or row["eye_side"] not in ("left", "right"):
+        if sample_eye in seen or row["eye_side"] not in ("left", "right", "unspecified"):
             raise ValueError("Duplicate sample/eye or wrong eye side")
         seen.add(sample_eye)
         if row["split"] not in SPLITS or row["observable"] not in ("0", "1"):
             raise ValueError("Invalid split or observable flag")
-        try:
-            timestamp = float(row["timestamp_s"])
-        except ValueError as exc:
-            raise ValueError("Invalid timestamp") from exc
-        if not math.isfinite(timestamp) or timestamp < 0:
-            raise ValueError("Invalid timestamp")
+        if row["timestamp_s"] == "" and row["eye_side"] == "unspecified":
+            timestamp = None  # eye-only source does not supply frame time
+        else:
+            try:
+                timestamp = float(row["timestamp_s"])
+            except ValueError as exc:
+                raise ValueError("Invalid timestamp") from exc
+            if not math.isfinite(timestamp) or timestamp < 0:
+                raise ValueError("Invalid timestamp")
         if row["observable"] == "1" and row["label"] not in ("0", "1"):
             raise ValueError("Observable samples need independent 0/1 eye labels")
         if row["observable"] == "0" and row["label"] != "":
@@ -84,7 +87,8 @@ def binary_rows(rows: list[dict[str, str]], split: str, paired: bool = False) ->
     selected = [
         row for row in rows
         if row["split"] == split and row["observable"] == "1" and row.get("crop_path")
-        and (not paired or row.get("ear", "") != "")
+        and (not paired or (row["eye_side"] in ("left", "right")
+                            and row["timestamp_s"] != "" and row.get("ear", "") != ""))
     ]
     if {row["label"] for row in selected} != {"0", "1"}:
         raise ValueError("Partition needs both labels after quality filtering: " + split)

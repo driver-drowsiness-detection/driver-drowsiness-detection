@@ -45,6 +45,7 @@ def main(argv: list[str] | None = None) -> None:
     rows = binary_rows(partition, split)
     model = CNN(checkpoint, device=device)
     labels, predictions, scores = [], [], []
+    by_subject = {}
     for row in rows:
         crop = cv2.imread(row["crop_path"])
         if crop is None:
@@ -54,6 +55,9 @@ def main(argv: list[str] | None = None) -> None:
         labels.append(int(row["label"]))
         predictions.append(int(score >= 0.5))
         scores.append(score)
+        group = by_subject.setdefault(row["subject_id"], ([], []))
+        group[0].append(labels[-1])
+        group[1].append(predictions[-1])
 
     result = _metrics(labels, predictions)
     result.update({
@@ -68,6 +72,8 @@ def main(argv: list[str] | None = None) -> None:
         "observable_rows": sum(r["observable"] == "1" for r in partition),
         "coverage_observable": len(rows) / sum(r["observable"] == "1" for r in partition),
         "mean_closed_score": sum(scores) / len(scores),
+        "per_subject": {subject: _metrics(*values)
+                        for subject, values in sorted(by_subject.items())},
     })
     report_path = Path(report)
     report_path.parent.mkdir(parents=True, exist_ok=True)

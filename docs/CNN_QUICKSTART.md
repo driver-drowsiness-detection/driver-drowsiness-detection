@@ -35,6 +35,28 @@ The tests create small synthetic images in temporary directories, run a real
 training step, reload weights, check preprocessing and calculate a report. That
 proves code execution only. It is not a trained eye classifier demonstration.
 
+## Supplemental MRL eye dataset on this laptop
+
+The authors' [MRL Eye Dataset](https://mrl.cs.vsb.cz/eyedataset.html) supplies
+eye-image labels and subject IDs. Its original archive is stored locally under
+ignored `data/raw/mrl/`. `scripts/prepare_mrl_dataset.py` validates that release,
+reverses the source's `0=closed, 1=open` labels to this project's convention, and
+groups all images from one subject into one partition. It records missing
+anatomical side, session, video and timestamp instead of inventing them.
+The resulting manifest is for supplemental CNN training only. Its eye-only
+images cannot establish same-frame EAR, temporal drowsiness or Jetson accuracy.
+
+```powershell
+.\.venv-cognition\Scripts\python.exe scripts/prepare_mrl_dataset.py data/raw/mrl/mrlEyes_2018_01.zip data/processed/mrl_manifest_v1.csv
+.\.venv-cognition\Scripts\python.exe scripts/audit_dataset.py data/processed/mrl_manifest_v1.csv
+.\.venv-cognition\Scripts\python.exe scripts/train_cnn.py data/processed/mrl_manifest_v1.csv models/checkpoints/mrl_eye_v1.pt 1 cpu
+```
+
+Use a new versioned manifest/checkpoint path if files already exist. The
+[measured MRL pilot](MRL_LAPTOP_PILOT.md) records current results and limits.
+NTHU-DDD remains the main planned video benchmark and still requires its original
+access process.
+
 ## When the real data and annotations exist
 
 Keep originals under `data/raw/`. Start with the header-only

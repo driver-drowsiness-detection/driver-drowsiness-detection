@@ -50,3 +50,21 @@ def test_binary_rows_requires_two_labels_after_crop_filtering():
     rows = [_row(crop_path="left.png"), _row("set:p2:s2:0002", subject_id="set:p2",
                  session_id="set:p2:s2", video_id="set:p2:s2:v1", crop_path="right.png", label="1")]
     assert len(binary_rows(rows, "train")) == 2
+
+
+def test_eye_only_source_keeps_unknown_side_and_time_out_of_paired_comparison(tmp_path):
+    rows = [
+        _row("mrl:p1:1", side="unspecified", timestamp_s="", crop_path="a.png"),
+        _row("mrl:p2:2", side="unspecified", timestamp_s="", crop_path="b.png",
+             subject_id="mrl:p2", session_id="mrl:p2:all", video_id="mrl:p2:all",
+             label="1"),
+    ]
+    path = tmp_path / "manifest.csv"
+    with path.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
+        writer.writeheader()
+        writer.writerows(rows)
+    imported = read_manifest(path)
+    assert len(binary_rows(imported, "train")) == 2
+    with pytest.raises(ValueError, match="both labels"):
+        binary_rows(imported, "train", paired=True)

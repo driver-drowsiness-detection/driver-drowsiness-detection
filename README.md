@@ -3,7 +3,10 @@
 CNN setup and commands: [CNN quickstart](docs/CNN_QUICKSTART.md).
 GitHub audit, dataset status and completion plan: [Cognition plan](docs/COGNITION_PLAN.md).
 Arushi works on `cnn`; Vishruth works on `codex/ear-cognition`.
-No real dataset has been downloaded or eye classifier trained yet.
+On this laptop, an original MRL eye-image archive and a subject-separated pilot
+have been prepared. See [the measured pilot](docs/MRL_LAPTOP_PILOT.md). The
+resulting checkpoint is exploratory and is not a validated drowsiness model.
+These local images and weights are excluded from Git.
 
 ## Existing camera and eye perception
 
