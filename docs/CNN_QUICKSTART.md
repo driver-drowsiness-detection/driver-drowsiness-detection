@@ -1,7 +1,8 @@
 # CNN branch: run, prepare and train
 
-For the laptop CUDA setup, use [LAPTOP_GPU_TRAINING.md](LAPTOP_GPU_TRAINING.md).
-The environment instructions below describe the existing CPU setup.
+The steps below use CPU training on the Intel laptop in this checkout, as
+Arushi chose laptop-only training on 2026-11-06. A separate team laptop has a
+verified NVIDIA GPU setup in [LAPTOP_GPU_TRAINING.md](LAPTOP_GPU_TRAINING.md).
 
 Read [COGNITION_PLAN.md](COGNITION_PLAN.md) for the verified project status,
 dataset access decisions, label rules, branch ownership and completion gates.
@@ -25,9 +26,10 @@ $env:MARVEL_TEST_MODEL = "models/face_landmarker.task"
 ```
 
 Create the environment only if it does not already exist. This Windows/Python
-3.11 setup uses CPU PyTorch so development checks need no GPU. It does not select
-the final training machine. Colab/GPU requires a separately verified environment;
-do not apply this Windows lock to Jetson Nano.
+3.11 setup uses CPU PyTorch. This laptop has Intel Iris Xe graphics and its
+installed PyTorch reports CUDA unavailable. The tested training device here is
+`cpu`. The linked GPU guide records results from a different laptop; do not
+apply this Windows lock to Jetson Nano.
 
 The tests create small synthetic images in temporary directories, run a real
 training step, reload weights, check preprocessing and calculate a report. That

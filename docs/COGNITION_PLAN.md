@@ -150,7 +150,17 @@ Train fits CNN weights; calibration fits CNN temperature and EAR score mapping;
 validation selects checkpoints/cutoffs/fusion policy; test is used after freezing.
 Do not report a successful synthetic smoke test as checkpoint 3 or 5 completion.
 
-Open decisions: training machine (laptop GPU/CPU or Colab), real NTHU access and
+Training location decision (2026-11-06): Arushi chose laptop training. On the
+Windows laptop in this checkout, inspection found an Intel Core i5-1235U
+(10 cores), 15.7 GiB RAM, Intel Iris Xe graphics, and PyTorch 2.14.1+cpu with
+CUDA unavailable. Use the verified `cpu` command here. The newer
+`LAPTOP_GPU_TRAINING.md` records a *different* team laptop with a tested RTX
+3050 and CUDA; those results do not apply to this Intel laptop. Either laptop
+would still meet the laptop-only choice, but the team has not selected that
+other machine for real training. Measure real-data timing before revising the
+device choice.
+
+Open decisions: real NTHU access and
 annotation schema, partial-eye closure policy, evaluation objective/operating
 cutoff, and actual Jetson software versions. There is no promised accuracy/FPS.
 
