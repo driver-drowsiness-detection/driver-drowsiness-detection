@@ -272,7 +272,20 @@ the MRL test split remains unscored. See
 [MRL calibration and validation](MRL_CALIBRATION_VALIDATION.md) for methods,
 condition counts and limitations.
 
-## 8. What remains before using CNN in the project
+After Arushi prioritized avoiding missed closures, a provisional raw-score
+cutoff chosen for at least 95% calibration recall reached **98.14% closed-eye
+recall** on MRL validation, but called **52.61% of open eyes closed**. It was
+not adopted as a live decision rule.
+
+## 8. ONNX export and live path
+
+The model was also exported to ONNX opset 11, checked against PyTorch on
+100 validation eyes, and connected to the laptop perception preview. Two
+short webcam runs produced live eye crops and scores and reopened cleanly.
+This verifies laptop software linkage, not webcam eye-state accuracy.
+See [CNN export and live probe](CNN_EXPORT_AND_LIVE_PROBE.md).
+
+## 9. What remains before using CNN in the project
 
 1. Review more false-positive images, especially under glasses/reflections,
    and investigate why the temperature fit worsened validation probability

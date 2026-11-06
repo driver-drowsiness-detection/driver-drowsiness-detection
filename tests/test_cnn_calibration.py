@@ -38,6 +38,8 @@ def test_threshold_candidates_keep_open_false_positives_within_calibration_limit
     selected = metrics(labels, scores, choices["calibration_open_fpr_at_most_5pct"])
     assert selected["fp"] == 0
     assert selected["tp"] == 1
+    high_recall = metrics(labels, scores, choices["calibration_closed_recall_at_least_95pct"])
+    assert high_recall["recall_closed"] == 1
     assert metrics(labels, scores, choices["calibration_f1"])["f1_closed"] >= selected["f1_closed"]
     assert metrics([0, 1], [0.9, 0.1], 0.5)["fp"] == 1
 

@@ -14,8 +14,8 @@ from marvel.perception.config import load_config
 from marvel.perception.pipeline import process_frame
 
 
-def summary(frame, eyes, status, metrics, age, fps):
-    return {
+def summary(frame, eyes, status, metrics, age, fps, cnn_estimates=None):
+    record = {
         "sample_id": frame.sample_id, "t": frame.t, "shape": list(frame.image.shape),
         "status": status, "read_age_s": age, "processed_fps": fps,
         "eyes": [{"sample_id": e.sample_id, "t": e.t, "track": e.track, "side": e.side,
@@ -24,6 +24,14 @@ def summary(frame, eyes, status, metrics, age, fps):
                   "crop_shape": list(e.crop.shape) if e.crop is not None else None}
                  for e in eyes], "metrics": metrics,
     }
+    if cnn_estimates is not None:
+        record["cnn_status"] = "experimental_raw_eye_scores_no_alert"
+        record["cnn"] = [
+            {"sample_id": e.sample_id, "t": e.t, "track": e.track,
+             "side": e.side, "value": e.value, "valid": e.valid, "reason": e.reason}
+            for e in cnn_estimates
+        ]
+    return record
 
 
 def main(argv=None):
@@ -34,7 +42,12 @@ def main(argv=None):
     parser.add_argument("--no-display", action="store_true", help="Print observations without GUI windows")
     parser.add_argument("--max-frames", type=int, help="Stop after this many received frames")
     parser.add_argument("--max-seconds", type=float, help="Stop after this many elapsed seconds")
+    cnn_options = parser.add_mutually_exclusive_group()
+    cnn_options.add_argument("--cnn-checkpoint", help="Experimental raw CNN scores from a local PyTorch checkpoint")
+    cnn_options.add_argument("--cnn-onnx", help="Experimental raw CNN scores from a validated ONNX export")
     args = parser.parse_args(argv)
+    if args.mode != "perception" and (args.cnn_checkpoint or args.cnn_onnx):
+        parser.error("CNN scoring requires perception mode and eye crops")
     if args.max_frames is not None and args.max_frames <= 0:
         parser.error("--max-frames must be positive")
     if args.max_seconds is not None:
@@ -48,7 +61,7 @@ def main(argv=None):
     import numpy as np
     from marvel.observability.overlay import draw_preview, show_eyes
 
-    capture = detector = None
+    capture = detector = cnn = None
     display = not args.no_display
     try:
         if args.mode == "perception":
@@ -56,6 +69,16 @@ def main(argv=None):
             detector = Detector(config["landmarker"], config["driver_roi"], config["quality"])
             if config["quality"]["laplacian_min"] == 0:
                 print("NOTE: blur rejection disabled; sharpness is measured only.", file=sys.stderr)
+        if args.cnn_checkpoint:
+            from marvel.cognition.cnn_inference import CNN
+            cnn = CNN(args.cnn_checkpoint, device="cpu")
+        elif args.cnn_onnx:
+            from marvel.cognition.cnn_inference import OpenCVCNN
+            metadata = json.loads(Path(args.cnn_onnx + ".json").read_text(encoding="utf-8"))
+            cnn = OpenCVCNN(args.cnn_onnx, metadata["checkpoint_sha256"])
+        if cnn is not None:
+            print("NOTE: experimental raw eye scores only; no calibrated threshold or alert.",
+                  file=sys.stderr)
         if args.image:
             image = cv2.imread(args.image)
             if image is None:
@@ -90,15 +113,24 @@ def main(argv=None):
             else:
                 last_received = now
                 eyes, status, metrics, age = process_frame(frame, detector, max_age)
+                estimates = None if cnn is None else [cnn.estimate(eye) for eye in eyes]
                 done = time.monotonic()
                 fps = 0.0 if last_done is None else 1.0 / max(done - last_done, 1e-6)
                 last_done = done
                 if display:
-                    cv2.imshow("MARVEL preview", draw_preview(frame, eyes, status, fps, age, metrics))
+                    canvas = draw_preview(frame, eyes, status, fps, age, metrics)
+                    if estimates is not None:
+                        labels = {e.side: (f"{e.value:.3f}" if e.valid else "UNKNOWN")
+                                  for e in estimates}
+                        line = "Experimental CNN closed score: L={} R={}".format(
+                            labels.get("left", "UNKNOWN"), labels.get("right", "UNKNOWN"))
+                        cv2.putText(canvas, line, (10, canvas.shape[0] - 15),
+                                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+                    cv2.imshow("MARVEL preview", canvas)
                     if detector is not None:
                         show_eyes(eyes)
                 if done - last_print >= 1.0 or args.image:
-                    print(json.dumps(summary(frame, eyes, status, metrics, age, fps)), flush=True)
+                    print(json.dumps(summary(frame, eyes, status, metrics, age, fps, estimates)), flush=True)
                     last_print = done
                 count += 1
                 if args.image:

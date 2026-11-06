@@ -10,12 +10,20 @@ on:
       - 'scripts/train_cnn.py'
       - 'scripts/evaluate.py'
       - 'scripts/calibrate_cnn.py'
+      - 'scripts/export_onnx.py'
+      - 'scripts/check_onnx.py'
+      - 'scripts/preview_perception.py'
+      - 'scripts/extract_frames.py'
       - 'src/marvel/training/calibration.py'
       - 'tests/test_cnn_pipeline.py'
       - 'tests/test_cnn_calibration.py'
+      - 'tests/test_cnn_export.py'
+      - 'tests/test_preview_cli.py'
+      - 'tests/test_extract_frames.py'
       - 'tests/test_dataset.py'
       - 'tests/test_inference_contract.py'
       - 'environments/windows-training.txt'
+      - 'environments/windows-export.txt'
       - '.github/workflows/cnn.yml'
 permissions:
   contents: read
@@ -33,6 +41,7 @@ jobs:
             environments/windows-perception-lock.txt
       - run: python -m pip install --upgrade pip
       - run: python -m pip install -r environments/windows-training.txt
+      - run: python -m pip install -r environments/windows-export.txt
       - run: python -m pip check
       - run: python scripts/download_landmarker.py
       - run: python -m pytest -q

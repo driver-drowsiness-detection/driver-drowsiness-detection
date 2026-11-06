@@ -1,0 +1,3 @@
+# Install after windows-training.txt in the Python 3.11 cognition environment.
+# ONNX 1.19.0 accepts the perception lock's protobuf 4.25.9.
+onnx==1.19.0

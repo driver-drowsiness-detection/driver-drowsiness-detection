@@ -56,6 +56,8 @@ CPU run completed. A later calibration experiment improved NLL on calibration
 subjects but worsened validation NLL and did not establish a live cutoff. See
 [MRL_FULL_TRAINING.md](MRL_FULL_TRAINING.md) and
 [MRL_CALIBRATION_VALIDATION.md](MRL_CALIBRATION_VALIDATION.md). The
+ONNX export passed laptop parity and a short live camera path check; see
+[CNN_EXPORT_AND_LIVE_PROBE.md](CNN_EXPORT_AND_LIVE_PROBE.md). The
 archive, local manifests and checkpoint are ignored by Git; a fresh clone
 contains none of them. This MRL model does not establish the proposal's NTHU
 video/EAR/temporal endpoint.
@@ -97,6 +99,10 @@ No claims about current NTHU license or eye-label definitions are made.
    only from the allowed development subjects. Do not mix official test into fit.
 7. Use `data/manifests/eye_annotations.template.csv`. It is intentionally header
    only; no fabricated labelled subjects have been included.
+   The generic `scripts/extract_frames.py` creates sampled full frames and a
+   blank review queue when real video and verified identities are supplied.
+   Its `annotation_status` and `orientation_status` must be explicitly
+   reviewed before the manifest reader accepts those rows.
 
 ### Current manifest contract
 

@@ -102,13 +102,15 @@ def main():
     cal_scores, val_scores = probabilities(cal_logits, temperature), probabilities(val_logits, temperature)
     candidates = {"raw_0_5": 0.5, "calibrated_0_5": 0.5}
     candidates.update(choose_thresholds(cal_labels, cal_scores))
+    candidates["raw_calibration_recall_at_least_95pct"] = choose_thresholds(
+        cal_labels, cal_raw)["calibration_closed_recall_at_least_95pct"]
     result = {
         "status": "development_analysis_not_frozen",
         "checkpoint_sha256": sha256(args.checkpoint),
         "manifest_sha256": manifest_hash,
         "temperature": temperature,
         "temperature_fit": fit,
-        "threshold_selection": "calibration subjects only; F1 maximum and <=5% open-eye FPR candidate",
+        "threshold_selection": "calibration subjects only; F1 maximum, <=5% open-eye FPR, and >=95% closed-eye recall development candidates",
         "validation_role": "checkpoint epoch was previously selected on validation; this is not a final unbiased test",
         "test_scored": False,
         "calibration_subjects": sorted(cal_subjects),
@@ -122,7 +124,7 @@ def main():
         "operating_points": {},
     }
     for name, threshold in candidates.items():
-        cal_used, val_used = (cal_raw, val_raw) if name == "raw_0_5" else (cal_scores, val_scores)
+        cal_used, val_used = (cal_raw, val_raw) if name.startswith("raw_") else (cal_scores, val_scores)
         result["operating_points"][name] = {
             "threshold": threshold,
             "calibration": metrics(cal_labels, cal_used, threshold),

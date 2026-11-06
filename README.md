@@ -8,7 +8,9 @@ subject-separated CNN trained. See [the full MRL run](docs/MRL_FULL_TRAINING.md)
 and [the earlier pilot](docs/MRL_LAPTOP_PILOT.md). The
 [score calibration and error review](docs/MRL_CALIBRATION_VALIDATION.md)
 found that the fitted temperature worsened validation probability quality;
-no live threshold was frozen. The checkpoint is an
+no live threshold was frozen. A separate
+[export and live-path check](docs/CNN_EXPORT_AND_LIVE_PROBE.md) verified
+ONNX parity and a short laptop camera run. The checkpoint is an
 experimental eye classifier, not a validated live drowsiness model. Local
 images and weights are excluded from Git.
 

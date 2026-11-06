@@ -64,13 +64,22 @@ means a **closed** eye was missed. FPR divides FP by the number of open eyes.
 | Raw baseline | 0.5000 | 1,509 / 7,671 (19.67%) | 84.85% | 8,392 | 5,054 | 2,483 / 7,537 (32.94%) | 334 | 96.17% | 82.68% |
 | Temperature + calibration F1 choice | 0.5001 | 1,506 / 7,671 (19.63%) | 84.85% | 8,392 | 5,055 | 2,482 / 7,537 (32.93%) | 334 | 96.17% | 82.68% |
 | Temperature + calibration <=5% open-eye FPR choice | 0.7581 | 383 / 7,671 (4.99%) | 40.17% | 6,264 | 7,044 | 493 / 7,537 (6.54%) | 2,462 | 71.79% | 81.83% |
+| Raw score + calibration >=95% closed-eye recall choice | 0.3348 | 2,274 / 7,671 (29.64%) | 95.01% | 8,564 | 3,572 | 3,965 / 7,537 (52.61%) | 162 | 98.14% | 74.62% |
 
 Raising the cutoff reduced validation false-positive **eye classifications**
 from 2,483 to 493, but missed **2,462 closed eyes** instead of 334. The
 calibration F1 choice stayed effectively at 0.5 and barely changed errors.
-Neither candidate is an acceptable live-alert rule on this evidence. An
+None of these candidates is an acceptable live-alert rule on this evidence. An
 eye-image FPR cannot be converted to a per-minute driver false-alarm rate
 without camera, bilateral and temporal evaluation.
+
+After Arushi specified that **missed closures matter more** than false eye
+closure calls, we added the last row as a development check. It uses raw
+scores because temperature scaling worsened validation probability quality.
+The 95% calibration recall target is provisional, since the team has not
+specified a numeric operating requirement. It improves validation recall
+from 96.17% at raw cutoff 0.5 to 98.14%, but incorrectly calls **more than
+half of open validation eyes closed**. It is not a deployable rule.
 
 ## Where the remaining false positives occur
 

@@ -61,6 +61,10 @@ def read_manifest(path: str | Path) -> list[dict[str, str]]:
             raise ValueError("Unobservable eyes must have a blank binary label")
         if row["label_source"] not in ("human", "dataset_eye_annotation"):
             raise ValueError("EAR-generated labels are not independent ground truth")
+        if "annotation_status" in row and row["annotation_status"] != "reviewed":
+            raise ValueError("Annotation queue still needs human review")
+        if "orientation_status" in row and row["orientation_status"] != "verified":
+            raise ValueError("Anatomical eye side orientation is not verified")
         for field in ("source", "subject_id", "session_id", "video_id"):
             if not row[field] or row[field].lower() in {"undecided", "unknown", "pending"}:
                 raise ValueError("Missing grouping identity: " + field)

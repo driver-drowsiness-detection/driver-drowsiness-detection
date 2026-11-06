@@ -97,7 +97,8 @@ def calibration_quality(labels, scores) -> dict:
     return {"nll": float(nll), "brier": float(brier), "ece_10_bins": ece}
 
 
-def choose_thresholds(labels, scores, maximum_open_fpr: float = 0.05) -> dict:
+def choose_thresholds(labels, scores, maximum_open_fpr: float = 0.05,
+                      minimum_closed_recall: float = 0.95) -> dict:
     """Select candidates on calibration eyes only; group tied scores together."""
     y = np.asarray(labels, dtype=np.int8)
     p = np.asarray(scores, dtype=np.float64)
@@ -107,6 +108,8 @@ def choose_thresholds(labels, scores, maximum_open_fpr: float = 0.05) -> dict:
         raise ValueError("Threshold selection needs both eye classes")
     if not 0 <= maximum_open_fpr <= 1:
         raise ValueError("Maximum open-eye false-positive rate must be in [0, 1]")
+    if not 0 < minimum_closed_recall <= 1:
+        raise ValueError("Minimum closed-eye recall must be in (0, 1]")
     order = np.argsort(-p, kind="stable")
     sorted_y, sorted_p = y[order], p[order]
     open_count = int(np.sum(y == 0))
@@ -114,6 +117,7 @@ def choose_thresholds(labels, scores, maximum_open_fpr: float = 0.05) -> dict:
     tp = fp = 0
     best_f1 = (0.0, float(np.nextafter(sorted_p[0], math.inf)))
     best_fpr = (0, float(np.nextafter(sorted_p[0], math.inf)))
+    recall_threshold = None
     index = 0
     while index < len(y):
         end = index + 1
@@ -128,6 +132,9 @@ def choose_thresholds(labels, scores, maximum_open_fpr: float = 0.05) -> dict:
             best_f1 = (f1, threshold)
         if fp / open_count <= maximum_open_fpr and tp > best_fpr[0]:
             best_fpr = (tp, threshold)
+        if recall_threshold is None and tp / total_closed >= minimum_closed_recall:
+            recall_threshold = threshold
         index = end
     return {"calibration_f1": best_f1[1],
-            "calibration_open_fpr_at_most_5pct": best_fpr[1]}
+            "calibration_open_fpr_at_most_5pct": best_fpr[1],
+            "calibration_closed_recall_at_least_95pct": recall_threshold}

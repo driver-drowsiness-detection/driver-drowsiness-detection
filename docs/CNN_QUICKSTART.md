@@ -58,6 +58,8 @@ The [full MRL run](MRL_FULL_TRAINING.md) records audited training and
 per-subject validation errors.
 The [calibration and false-positive review](MRL_CALIBRATION_VALIDATION.md)
 records the temperature fit and cutoff tradeoff; no live rule was frozen.
+The [ONNX export and laptop live-path check](CNN_EXPORT_AND_LIVE_PROBE.md)
+records the development export, numerical parity and short camera smoke run.
 NTHU-DDD remains the main planned video benchmark and still requires its original
 access process.
 
@@ -69,6 +71,23 @@ Keep originals under `data/raw/`. Start with the header-only
 `../raw/collection/frames/frame_001.png` is relative to `data/manifests/`.
 Choose actual dataset IDs and partition membership; this guide does not invent
 an annotation importer before the original NTHU schema can be inspected.
+
+If you have a video with **verified** subject/session/video identities, the
+generic extractor can save sample frames and a **blank** two-eye review queue:
+
+```powershell
+.\.venv-cognition\Scripts\python.exe scripts/extract_frames.py data/raw/my_video.mp4 data/processed/my_video_frames data/manifests/my_video_review.csv --subject-id collection:person01 --session-id collection:person01:session01 --video-id collection:person01:session01:video01 --source collection_name --step 15
+```
+
+Use the true identities and actual source name; the example values above are
+placeholders. Review anatomical sides, set `orientation_status=verified`, fill
+each eye's `observable`, `label`, and `label_source`, set
+`annotation_status=reviewed`, then assign a subject-separated `split`. The
+queue deliberately fails `read_manifest()` until review is complete. Source
+video labels are not copied to eye labels. The extractor's timestamps come
+from frame number divided by reported FPS and should not be treated as precise
+sensor exposure times for temporal event evaluation. Inspect any partially
+written output before retrying with new paths.
 
 ```powershell
 .\.venv-cognition\Scripts\python.exe scripts/audit_dataset.py data/manifests/annotations_v1.csv
