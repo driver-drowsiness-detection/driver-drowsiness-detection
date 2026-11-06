@@ -1,5 +1,6 @@
 """Read-only checks before a dataset is used for fitting."""
 import hashlib
+from concurrent.futures import ThreadPoolExecutor
 from collections import Counter
 from pathlib import Path
 
@@ -11,17 +12,27 @@ def audit_manifest(path):
 
     rows = read_manifest(path)
     ownership, checked = {}, {}
+    image_paths = dict.fromkeys(row[field] for row in rows
+                                for field in ("frame_path", "crop_path") if row.get(field))
+
+    def verify_and_hash(image_path):
+        with Image.open(image_path) as image:
+            image.verify()
+        with Path(image_path).open("rb") as handle:
+            return image_path, hashlib.file_digest(handle, "sha256").hexdigest()
+
+    # Windows image scans are I/O-bound; bound concurrency and report progress.
+    with ThreadPoolExecutor(max_workers=8) as workers:
+        for index, (image_path, digest) in enumerate(workers.map(verify_and_hash, image_paths), 1):
+            checked[image_path] = digest
+            if index % 10000 == 0:
+                print(f"Audited {index}/{len(image_paths)} images", flush=True)
+
     for row in rows:
         for field in ("frame_path", "crop_path"):
             if not row.get(field):
                 continue
             image_path = row[field]
-            if image_path not in checked:
-                with Image.open(image_path) as image:
-                    image.verify()
-                with Path(image_path).open("rb") as handle:
-                    digest = hashlib.file_digest(handle, "sha256").hexdigest()
-                checked[image_path] = digest
             digest = checked[image_path]
             if digest in ownership and ownership[digest] != row["split"]:
                 raise ValueError("Identical image bytes in different partitions: " + image_path)

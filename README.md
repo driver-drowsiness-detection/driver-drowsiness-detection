@@ -3,10 +3,11 @@
 CNN setup and commands: [CNN quickstart](docs/CNN_QUICKSTART.md).
 GitHub audit, dataset status and completion plan: [Cognition plan](docs/COGNITION_PLAN.md).
 Arushi works on `cnn`; Vishruth works on `codex/ear-cognition`.
-On this laptop, an original MRL eye-image archive and a subject-separated pilot
-have been prepared. See [the measured pilot](docs/MRL_LAPTOP_PILOT.md). The
-resulting checkpoint is exploratory and is not a validated drowsiness model.
-These local images and weights are excluded from Git.
+On this laptop, the original MRL eye archive has been audited and a
+subject-separated CNN trained. See [the full MRL run](docs/MRL_FULL_TRAINING.md)
+and [the earlier pilot](docs/MRL_LAPTOP_PILOT.md). The checkpoint is an
+experimental eye classifier, not a validated live drowsiness model. Local
+images and weights are excluded from Git.
 
 ## Existing camera and eye perception
 

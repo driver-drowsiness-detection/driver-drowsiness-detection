@@ -54,6 +54,8 @@ images cannot establish same-frame EAR, temporal drowsiness or Jetson accuracy.
 
 Use a new versioned manifest/checkpoint path if files already exist. The
 [measured MRL pilot](MRL_LAPTOP_PILOT.md) records current results and limits.
+The [full MRL run](MRL_FULL_TRAINING.md) records audited training and
+per-subject validation errors.
 NTHU-DDD remains the main planned video benchmark and still requires its original
 access process.
 
