@@ -7,7 +7,8 @@
 **CNN branch:** `cnn`
 
 **Owner:** Arushi
-**Latest implementation commit before this report:** `7818a18`
+**Implementation at the time this report was written:** through `7818a18`;
+the later calibration analysis is recorded below.
 
 This is a record of completed work and measured results, rather than a claim that
 the whole cognition or driver drowsiness system is finished. The CNN predicts
@@ -252,11 +253,31 @@ teammates pulling `cnn` receive **code and documentation, not those files**.
 The tracked `.github/workflows/cnn.yml` checks the code independently of the
 private/local dataset.
 
-## 7. What remains before using CNN in the project
+## 7. Calibration and false-positive review
 
-1. Fit score calibration using only the reserved calibration subjects.
-   Examine false positives by subject and available source conditions, then
-   choose an operating cutoff on validation. The current 0.5 is only a baseline.
+After the full MRL run, we fitted a temperature on calibration subjects and
+measured the resulting score and cutoff choices on validation subjects. The
+fitted temperature was **1.7201**. Calibration NLL improved from **0.5250**
+to **0.4859**, while validation NLL worsened from **0.4002** to **0.4093**.
+It is therefore an experimental fit, not an adopted runtime setting.
+
+A cutoff selected to keep the calibration open-eye FPR at or below 5% was
+**0.7581** on temperature-scaled scores. On validation it reduced false
+positives from **2,483 to 493**, but increased missed closed eyes from
+**334 to 2,462**. Validation open-eye FPR was **6.54%**. Error rates varied
+substantially by subject, glasses, reflection and sensor. Five high-score
+false-positive images were inspected visually as a spot check; a local queue
+holds all 493 for further review. No runtime cutoff has been frozen, and
+the MRL test split remains unscored. See
+[MRL calibration and validation](MRL_CALIBRATION_VALIDATION.md) for methods,
+condition counts and limitations.
+
+## 8. What remains before using CNN in the project
+
+1. Review more false-positive images, especially under glasses/reflections,
+   and investigate why the temperature fit worsened validation probability
+   quality. Define the project's operating objective before choosing a
+   deployable cutoff. The current 0.5 remains only a baseline.
 2. Freeze model, preprocessing, calibration and decision rules **before** a
    final held-out test evaluation. The MRL test split has not been scored.
 3. Obtain and inspect the proposal's NTHU-DDD data. Its driving videos and
@@ -273,6 +294,6 @@ private/local dataset.
    result has been recorded yet.
 
 **Current conclusion:** the branch has a functioning training and inference
-pipeline plus one audited, subject-separated MRL eye-classification experiment.
-It does **not** yet have calibrated live eye classification, validated drowsiness
-detection or a Jetson deployment.
+pipeline, one audited subject-separated MRL eye-classification experiment,
+and a calibration/error-analysis experiment. It does **not** yet have
+validated live eye classification, drowsiness detection or Jetson deployment.

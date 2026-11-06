@@ -56,6 +56,8 @@ Use a new versioned manifest/checkpoint path if files already exist. The
 [measured MRL pilot](MRL_LAPTOP_PILOT.md) records current results and limits.
 The [full MRL run](MRL_FULL_TRAINING.md) records audited training and
 per-subject validation errors.
+The [calibration and false-positive review](MRL_CALIBRATION_VALIDATION.md)
+records the temperature fit and cutoff tradeoff; no live rule was frozen.
 NTHU-DDD remains the main planned video benchmark and still requires its original
 access process.
 
@@ -98,9 +100,11 @@ checkpoint; train loss never substitutes for held-out evaluation.
 
 Evaluate reports the confusion matrix counts, closed-eye precision/recall/F1
 and coverage among independently observable eyes. The .5 score cutoff is an
-explicit unvalidated baseline. Temperature calibration, cutoff selection,
-per-person/condition reporting and paired fusion evaluation remain future
-checkpoints. After freezing those decisions, run the **test** split once.
+explicit unvalidated baseline. A separate MRL temperature calibration and
+cutoff analysis has been run on calibration/validation subjects, with mixed
+results; see the linked report above. A live cutoff, paired fusion and camera
+domain evaluation remain future checkpoints. After freezing those decisions,
+run the **test** split once.
 
 ## How Vishruth connects EAR later
 

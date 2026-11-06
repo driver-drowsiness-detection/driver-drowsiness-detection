@@ -64,8 +64,10 @@ $env:MKL_NUM_THREADS = '4'
 .\.venv-cognition\Scripts\python.exe scripts/evaluate.py data/processed/mrl_manifest_v1.csv models/checkpoints/mrl_full_3epoch_v2.pt validation reports/runs/mrl_full_validation_v2.json cpu
 ```
 
-Use new paths; scripts refuse overwrite. The next development step is to fit
-score calibration using only calibration subjects, inspect false positives by
-subject and condition, and choose a validation cutoff. Obtain the proposal's
-NTHU-DDD recordings for paired and temporal project evaluation. Keep the MRL
-test subjects untouched until model choice and decision rules are frozen.
+Use new paths; scripts refuse overwrite. The completed calibration experiment,
+validation cutoff tradeoff, and false-positive breakdown are in
+[MRL calibration and validation](MRL_CALIBRATION_VALIDATION.md). It did not
+establish reliable live probabilities or an alert threshold. Obtain the
+proposal's NTHU-DDD recordings for paired and temporal project evaluation.
+Keep the MRL test subjects untouched until model choice and decision rules
+are frozen.

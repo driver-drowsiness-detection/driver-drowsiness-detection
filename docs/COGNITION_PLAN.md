@@ -52,7 +52,10 @@ The proposal names **NTHU-DDD as the main benchmark**, plus YawDD and UTA-RLDD.
 The user confirmed on October 20 that NTHU-DDD was **not downloaded**. On
 November 6, the original MRL eye-image archive was downloaded to this laptop,
 a small pilot was trained, and the full 84,898-image audit and three-epoch
-CPU run completed. See [MRL_FULL_TRAINING.md](MRL_FULL_TRAINING.md). The
+CPU run completed. A later calibration experiment improved NLL on calibration
+subjects but worsened validation NLL and did not establish a live cutoff. See
+[MRL_FULL_TRAINING.md](MRL_FULL_TRAINING.md) and
+[MRL_CALIBRATION_VALIDATION.md](MRL_CALIBRATION_VALIDATION.md). The
 archive, local manifests and checkpoint are ignored by Git; a fresh clone
 contains none of them. This MRL model does not establish the proposal's NTHU
 video/EAR/temporal endpoint.
