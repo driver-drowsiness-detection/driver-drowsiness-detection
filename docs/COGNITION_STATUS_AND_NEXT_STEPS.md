@@ -1,5 +1,17 @@
 # Cognition status and next steps
 
+## 7 November 2026 update
+
+The October audit below is historical. CNN work through `14ae038` was merged
+locally in `feb609c`; its reports record MRL training, calibration experiments,
+ONNX export and a short camera score check on Arushi's laptop. The trained
+artifacts remain absent from this checkout. Fusion is now implemented as an
+experimental aligned-score function with a separate three-mode estimate replay
+adapter. Camera application wiring, fitted EAR mapping, validated fusion
+parameters and real sequence evaluation remain pending. See
+[comparison foundation](COMPARISON_FOUNDATION.md) and the
+[dated work record](WORK_RECORD_2026_11_07.md) for current evidence.
+
 Audit date: 22 October 2026. This is an implementation audit and proposed execution order, not a record of completed integration.
 
 ## Confirmed review scope and implementation update

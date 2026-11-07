@@ -16,6 +16,12 @@ images and weights are excluded from Git and must be acquired separately.
 
 ## Integrated EAR cognition
 
+[Comparison foundation](docs/COMPARISON_FOUNDATION.md) now provides experimental
+EAR/CNN/fusion estimate replay with strict identity checks, missing evidence,
+independent temporal histories and coverage logs. It requires explicit settings;
+it does not yet connect CNN or fusion to the camera application. The dated
+[work record](docs/WORK_RECORD_2026_11_07.md) tracks verification and remaining work.
+
 [Cognition runtime](docs/COGNITION_RUNTIME.md) documents the runnable image/video/camera
 entry point, EAR decisions, MAR telemetry, rolling closure proxy, optional calibrated
 pose and Windows fixed audio. [Current status](docs/COGNITION_STATUS_AND_NEXT_STEPS.md)

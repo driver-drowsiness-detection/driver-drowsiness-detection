@@ -1,5 +1,17 @@
 # Decision log
 
+## 2026-11-07: comparison and fusion foundation
+
+The user selected EAR/CNN comparison and fusion as the next increment. Used
+the existing Phase 1 weighted-score experiment because it allows an inspectable
+comparison while preserving raw EAR and CNN baselines. Required both valid
+branches even at alpha endpoints, as specified by the existing design. Used
+three independent controllers with identical timing because shared state would
+contaminate the comparison. Every parameter is explicit; synthetic fixture
+values are not adopted runtime settings. No evidence of fusion improvement is
+claimed. See COMPARISON_FOUNDATION.md for alternatives, walkthrough, tests and
+the interview explanation.
+
 ## 2026-10-23: connect EAR and implement observable cognition measurements
 
 Used the reviewed EAR source from `origin/ear-cognition` at `f8cddad` because its geometry and identity behavior had already been checked. Integrated those files without a wholesale branch merge. Used elapsed-time interval accounting with explicit coverage because frame counts and missing observations can distort a rolling closure statistic. The output remains a binary closure proxy until a physical PERCLOS criterion is validated.
