@@ -1,7 +1,8 @@
 # CNN branch: run, prepare and train
 
-For the laptop CUDA setup, use [LAPTOP_GPU_TRAINING.md](LAPTOP_GPU_TRAINING.md).
-The environment instructions below describe the existing CPU setup.
+The steps below use CPU training on the Intel laptop in this checkout, as
+Arushi chose laptop-only training on 2026-11-06. A separate team laptop has a
+verified NVIDIA GPU setup in [LAPTOP_GPU_TRAINING.md](LAPTOP_GPU_TRAINING.md).
 
 Read [COGNITION_PLAN.md](COGNITION_PLAN.md) for the verified project status,
 dataset access decisions, label rules, branch ownership and completion gates.
@@ -25,13 +26,42 @@ $env:MARVEL_TEST_MODEL = "models/face_landmarker.task"
 ```
 
 Create the environment only if it does not already exist. This Windows/Python
-3.11 setup uses CPU PyTorch so development checks need no GPU. It does not select
-the final training machine. Colab/GPU requires a separately verified environment;
-do not apply this Windows lock to Jetson Nano.
+3.11 setup uses CPU PyTorch. This laptop has Intel Iris Xe graphics and its
+installed PyTorch reports CUDA unavailable. The tested training device here is
+`cpu`. The linked GPU guide records results from a different laptop; do not
+apply this Windows lock to Jetson Nano.
 
 The tests create small synthetic images in temporary directories, run a real
 training step, reload weights, check preprocessing and calculate a report. That
 proves code execution only. It is not a trained eye classifier demonstration.
+
+## Supplemental MRL eye dataset on this laptop
+
+The authors' [MRL Eye Dataset](https://mrl.cs.vsb.cz/eyedataset.html) supplies
+eye-image labels and subject IDs. Its original archive is stored locally under
+ignored `data/raw/mrl/`. `scripts/prepare_mrl_dataset.py` validates that release,
+reverses the source's `0=closed, 1=open` labels to this project's convention, and
+groups all images from one subject into one partition. It records missing
+anatomical side, session, video and timestamp instead of inventing them.
+The resulting manifest is for supplemental CNN training only. Its eye-only
+images cannot establish same-frame EAR, temporal drowsiness or Jetson accuracy.
+
+```powershell
+.\.venv-cognition\Scripts\python.exe scripts/prepare_mrl_dataset.py data/raw/mrl/mrlEyes_2018_01.zip data/processed/mrl_manifest_v1.csv
+.\.venv-cognition\Scripts\python.exe scripts/audit_dataset.py data/processed/mrl_manifest_v1.csv
+.\.venv-cognition\Scripts\python.exe scripts/train_cnn.py data/processed/mrl_manifest_v1.csv models/checkpoints/mrl_eye_v1.pt 1 cpu
+```
+
+Use a new versioned manifest/checkpoint path if files already exist. The
+[measured MRL pilot](MRL_LAPTOP_PILOT.md) records current results and limits.
+The [full MRL run](MRL_FULL_TRAINING.md) records audited training and
+per-subject validation errors.
+The [calibration and false-positive review](MRL_CALIBRATION_VALIDATION.md)
+records the temperature fit and cutoff tradeoff; no live rule was frozen.
+The [ONNX export and laptop live-path check](CNN_EXPORT_AND_LIVE_PROBE.md)
+records the development export, numerical parity and short camera smoke run.
+NTHU-DDD remains the main planned video benchmark and still requires its original
+access process.
 
 ## When the real data and annotations exist
 
@@ -41,6 +71,23 @@ Keep originals under `data/raw/`. Start with the header-only
 `../raw/collection/frames/frame_001.png` is relative to `data/manifests/`.
 Choose actual dataset IDs and partition membership; this guide does not invent
 an annotation importer before the original NTHU schema can be inspected.
+
+If you have a video with **verified** subject/session/video identities, the
+generic extractor can save sample frames and a **blank** two-eye review queue:
+
+```powershell
+.\.venv-cognition\Scripts\python.exe scripts/extract_frames.py data/raw/my_video.mp4 data/processed/my_video_frames data/manifests/my_video_review.csv --subject-id collection:person01 --session-id collection:person01:session01 --video-id collection:person01:session01:video01 --source collection_name --step 15
+```
+
+Use the true identities and actual source name; the example values above are
+placeholders. Review anatomical sides, set `orientation_status=verified`, fill
+each eye's `observable`, `label`, and `label_source`, set
+`annotation_status=reviewed`, then assign a subject-separated `split`. The
+queue deliberately fails `read_manifest()` until review is complete. Source
+video labels are not copied to eye labels. The extractor's timestamps come
+from frame number divided by reported FPS and should not be treated as precise
+sensor exposure times for temporal event evaluation. Inspect any partially
+written output before retrying with new paths.
 
 ```powershell
 .\.venv-cognition\Scripts\python.exe scripts/audit_dataset.py data/manifests/annotations_v1.csv
@@ -72,9 +119,11 @@ checkpoint; train loss never substitutes for held-out evaluation.
 
 Evaluate reports the confusion matrix counts, closed-eye precision/recall/F1
 and coverage among independently observable eyes. The .5 score cutoff is an
-explicit unvalidated baseline. Temperature calibration, cutoff selection,
-per-person/condition reporting and paired fusion evaluation remain future
-checkpoints. After freezing those decisions, run the **test** split once.
+explicit unvalidated baseline. A separate MRL temperature calibration and
+cutoff analysis has been run on calibration/validation subjects, with mixed
+results; see the linked report above. A live cutoff, paired fusion and camera
+domain evaluation remain future checkpoints. After freezing those decisions,
+run the **test** split once.
 
 ## How Vishruth connects EAR later
 

@@ -49,9 +49,19 @@ Default CNN temperature 1 and classification cutoff .5 are unvalidated baselines
 ## Dataset decision and actual availability
 
 The proposal names **NTHU-DDD as the main benchmark**, plus YawDD and UTA-RLDD.
-The user confirmed on October 20 that the dataset is **not downloaded**.
-The repository contains no training images, eye-state annotations or trained CNN
-checkpoint. Its face-landmarker model belongs to perception, not the eye CNN.
+The user confirmed on October 20 that NTHU-DDD was **not downloaded**. On
+November 6, the original MRL eye-image archive was downloaded to this laptop,
+a small pilot was trained, and the full 84,898-image audit and three-epoch
+CPU run completed. A later calibration experiment improved NLL on calibration
+subjects but worsened validation NLL and did not establish a live cutoff. See
+[MRL_FULL_TRAINING.md](MRL_FULL_TRAINING.md) and
+[MRL_CALIBRATION_VALIDATION.md](MRL_CALIBRATION_VALIDATION.md). The
+ONNX export passed laptop parity and a short live camera path check; see
+[CNN_EXPORT_AND_LIVE_PROBE.md](CNN_EXPORT_AND_LIVE_PROBE.md). The
+archive, local manifests and checkpoint are ignored by Git; a fresh clone
+contains none of them. This MRL model does not establish the proposal's NTHU
+video/EAR/temporal endpoint.
+The face-landmarker model belongs to perception, not the eye CNN.
 The later `05_DATA_AND_CNN.md` guide adds a per-eye open/closed CNN experiment.
 That requires independent eye labels and subject-disjoint evaluation; the
 proposal's benchmark names alone do not establish a compatible label mapping.
@@ -89,6 +99,10 @@ No claims about current NTHU license or eye-label definitions are made.
    only from the allowed development subjects. Do not mix official test into fit.
 7. Use `data/manifests/eye_annotations.template.csv`. It is intentionally header
    only; no fabricated labelled subjects have been included.
+   The generic `scripts/extract_frames.py` creates sampled full frames and a
+   blank review queue when real video and verified identities are supplied.
+   Its `annotation_status` and `orientation_status` must be explicitly
+   reviewed before the manifest reader accepts those rows.
 
 ### Current manifest contract
 
@@ -150,7 +164,17 @@ Train fits CNN weights; calibration fits CNN temperature and EAR score mapping;
 validation selects checkpoints/cutoffs/fusion policy; test is used after freezing.
 Do not report a successful synthetic smoke test as checkpoint 3 or 5 completion.
 
-Open decisions: training machine (laptop GPU/CPU or Colab), real NTHU access and
+Training location decision (2026-11-06): Arushi chose laptop training. On the
+Windows laptop in this checkout, inspection found an Intel Core i5-1235U
+(10 cores), 15.7 GiB RAM, Intel Iris Xe graphics, and PyTorch 2.14.1+cpu with
+CUDA unavailable. Use the verified `cpu` command here. The newer
+`LAPTOP_GPU_TRAINING.md` records a *different* team laptop with a tested RTX
+3050 and CUDA; those results do not apply to this Intel laptop. Either laptop
+would still meet the laptop-only choice, but the team has not selected that
+other machine for real training. Measure real-data timing before revising the
+device choice.
+
+Open decisions: real NTHU access and
 annotation schema, partial-eye closure policy, evaluation objective/operating
 cutoff, and actual Jetson software versions. There is no promised accuracy/FPS.
 

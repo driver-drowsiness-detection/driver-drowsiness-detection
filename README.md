@@ -3,8 +3,16 @@
 CNN setup and commands: [CNN quickstart](docs/CNN_QUICKSTART.md).
 GitHub audit, dataset status and completion plan: [Cognition plan](docs/COGNITION_PLAN.md).
 Arushi works on `cnn`; Vishruth works on `ear-cognition`.
-Original CEW images are downloaded for inspection, but reviewed subject-disjoint
-training data and a real trained eye classifier remain pending.
+The CNN branch records an audited MRL eye archive and a subject-separated
+CNN trained on Arushi's laptop. See [the full MRL run](docs/MRL_FULL_TRAINING.md)
+and [the earlier pilot](docs/MRL_LAPTOP_PILOT.md). The
+[score calibration and error review](docs/MRL_CALIBRATION_VALIDATION.md)
+found that the fitted temperature worsened validation probability quality;
+no live threshold was frozen. A separate
+[export and live-path check](docs/CNN_EXPORT_AND_LIVE_PROBE.md) verified
+ONNX parity and a short laptop camera run. The checkpoint is an
+experimental eye classifier, not a validated live drowsiness model. Local
+images and weights are excluded from Git and must be acquired separately.
 
 ## Integrated EAR cognition
 
@@ -22,7 +30,8 @@ CNN/fusion and LLM speech are not yet connected to this application.
 
 The integrated perception demo acquires live BGR frames, detects one face, extracts
 six points and a crop for each eye, checks usability and freshness, and shows the
-results. It does not classify drowsiness or run EAR/CNN, alarms, or an LLM.
+results. Optional CNN checkpoint or ONNX arguments add experimental raw eye
+closure scores. This preview does not make drowsiness or alert decisions.
 
 This remains the perception-only preview endpoint. The older team/environment/design
 guides describe the original scaffold and wider roadmap.

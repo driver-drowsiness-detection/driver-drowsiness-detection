@@ -7,6 +7,7 @@ import sys
 
 import cv2
 import numpy as np
+from marvel.contracts import Estimate, Frame
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -43,6 +44,21 @@ def test_q_while_waiting_closes_camera_and_windows(monkeypatch):
     monkeypatch.setattr(cv2, "destroyAllWindows", lambda: destroyed.append(True))
     preview.main(["camera"])
     assert capture.closed and destroyed == [True]
+
+
+def test_preview_cnn_summary_preserves_missing_evidence():
+    spec = importlib.util.spec_from_file_location("preview_cnn_test", ROOT / "scripts/preview_perception.py")
+    preview = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(preview)
+    frame = Frame("f1", 1.0, np.zeros((32, 64, 3), np.uint8))
+    estimates = [Estimate("f1", 1.0, "track_1", "left", "cnn", 0.8, True),
+                 Estimate("f1", 1.0, "track_1", "right", "cnn", None, False,
+                          "crop_quality")]
+    record = preview.summary(frame, [], "invalid_eye", {}, 0.01, 5.0, estimates)
+    assert record["cnn_status"] == "experimental_raw_eye_scores_no_alert"
+    assert record["cnn"][0]["value"] == 0.8
+    assert record["cnn"][1]["value"] is None
+    assert record["cnn"][1]["reason"] == "crop_quality"
 
 
 def test_standalone_jetson_probe_parses_as_python36():
