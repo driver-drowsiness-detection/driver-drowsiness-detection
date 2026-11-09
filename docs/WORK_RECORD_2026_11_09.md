@@ -130,3 +130,32 @@ Fusion had seven usable rows and EAR eight; this difference is retained in the
 report. No synthetic accuracy value is presented as project performance.
 The real model and reviewed camera dataset are still needed for real fitting.
 See FUSION_CALIBRATION_WORKFLOW.md for commands, algorithm walkthrough and gates.
+
+## Follow-up: actual CNN handoff and ten-epoch experiment
+
+Downloaded Arushi's checkpoint attachment from the shared repository release
+and verified the expected SHA256. Recreated its original ONNX hash. Retrieved
+the official MRL archive, checked its hash/CRC, and recreated the exact manifest
+hash embedded in the checkpoint. Baseline GPU evaluation differed from the
+earlier report by one open-eye prediction; the discrepancy is recorded.
+
+The user delegated the experiment choice. Used the existing EyeCNN, seed 7,
+subject split and preprocessing for a fresh ten-epoch CUDA run. Epoch ten had
+the best validation loss, 0.174283. At raw cutoff 0.5, validation accuracy
+improved from 82.67% to 93.19%, FP fell from 2,484 to 752, and FN rose from 334
+to 355. Subject s0007 recall worsened from 98.04% to 84.99%. Threshold
+candidates and failed probability-calibration transfer are recorded, not hidden
+behind aggregate accuracy. Final test subjects were not scored.
+
+The new ONNX passed a 100-eye stratified validation parity check, with maximum
+absolute logit error 0.0000114441 and no decision or tolerance failures. The
+saved-image application run completed, but the CNN still disagreed between eyes
+on the inspected CEW closed-face example. No live alert settings were changed.
+Eleven focused CNN pipeline, calibration and export tests passed in 51.33 seconds.
+
+Recorded the complete experiment, metrics, hashes, chart and remaining limits
+in MRL_LOCAL_CONTINUATION_2026_11_09.md and its linked evidence JSON. Prepared
+CAMERA_EVALUATION_COLLECTION.md for the missing real-camera evaluation input.
+The user was asked whether recordings already exist or a new recording session
+is needed. No new camera frames, human labels or participant identities were
+invented. Existing unrelated logger edits and reference files were preserved.

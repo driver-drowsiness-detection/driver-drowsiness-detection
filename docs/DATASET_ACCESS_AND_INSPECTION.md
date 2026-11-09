@@ -1,5 +1,11 @@
 # Dataset access and real image inspection
 
+Update, 9 November 2026: the official MRL archive and Arushi's trained checkpoint
+are now available in this checkout, with a reproduced manifest hash. See the
+[local CNN experiment](MRL_LOCAL_CONTINUATION_2026_11_09.md). The acquisition
+failures below are historical. The CEW identity/review limitations and the need
+for independently labelled full-frame camera data still apply.
+
 Checked 2026-10-22. This is an acquisition and feasibility record, not a training
 or accuracy report. NTHU-DDD remains the proposal's main video benchmark.
 

@@ -1,5 +1,27 @@
 # Cognition status and next steps
 
+## 9 November 2026: completed local CNN continuation
+
+Arushi's checkpoint is now transferred and hash verified. The official MRL
+archive reproduced the exact training-manifest hash. A fresh ten-epoch CUDA
+run selected epoch ten. At the same raw 0.5 cutoff, MRL validation accuracy
+rose from 82.67% to 93.19%; false positives fell from 2,484 to 752, while missed
+closures rose from 334 to 355. One subject's recall worsened substantially, so
+the aggregate gain does not establish reliable participant generalization.
+
+The new checkpoint and ONNX export are local. A 100-eye ONNX parity check
+passed, and the saved-face application path ran successfully. That face still
+produced disagreeing CNN eyes while EAR returned CLOSED. No RGB camera or
+fusion accuracy improvement has been established, and MRL test subjects remain
+unscored. See the [experiment and evidence](MRL_LOCAL_CONTINUATION_2026_11_09.md).
+
+Next: obtain and independently review full-frame RGB camera recordings using
+the [collection protocol](CAMERA_EVALUATION_COLLECTION.md), fit EAR mapping,
+and compare EAR/CNN/fusion with coverage and subject breakdowns. Laptop work
+remains the priority; Nano deployment is still pending cooling and board tests.
+The dated sections below describe earlier checkpoints and their then-missing
+artifacts, rather than the current handoff status.
+
 ## 9 November 2026 update
 
 Laptop camera integration now supports optional CNN artifacts, explicit fusion

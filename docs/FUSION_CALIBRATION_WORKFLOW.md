@@ -5,10 +5,10 @@ Updated 9 November 2026.
 ## Current answer
 
 EAR and CNN have an implemented camera integration and weighted fusion path.
-The real trained CNN artifact is still unavailable here. No experiment has yet
-shown that fusion improves this laptop's camera accuracy. The new tools complete
+The real trained CNN artifact has now been transferred and its SHA256 verified.
+No experiment has yet shown that fusion improves this laptop's camera accuracy. The tools complete
 the calibration and validation analysis mechanisms; real fitting still requires
-independently reviewed full-frame data and the trained artifact.
+independently reviewed full-frame data. See [the local CNN experiment](MRL_LOCAL_CONTINUATION_2026_11_09.md) for artifact and training evidence.
 
 MAR, head pose and the closure proxy are not extra votes added to the score.
 MAR measures mouth opening, pose measures orientation when calibrated, and the
@@ -116,6 +116,8 @@ grid are experimental requirements until the team accepts an operating policy.
 ## Required data and commands
 
 Use independently reviewed recordings from the intended camera conditions.
+The [camera collection guide](CAMERA_EVALUATION_COLLECTION.md) describes the
+recording, identity, split and review steps for the next laptop pilot.
 Record source and actual subject/session identities. Keep every subject in one
 partition. A single person's successful demonstration cannot establish accuracy
 on unseen people. MRL eye-only images cannot supply the full facial landmarks
@@ -137,7 +139,8 @@ Prepare it through the existing perception adapter:
 ```
 
 These are instructions for real reviewed data, which is not yet available here.
-Once the trained checkpoint is supplied, investigate fusion. The following
+The trained checkpoint is available locally. Once reviewed data is prepared,
+investigate fusion. The following
 numbers are illustrative analysis choices, not approved runtime settings:
 
 ```powershell
@@ -167,7 +170,7 @@ Synthetic coefficients were not installed in the camera application.
 
 ## Remaining acceptance gates
 
-1. Transfer and verify the actual trained CNN artifact.
+1. Completed locally: transfer and hash verification of the actual trained CNN artifact.
 2. Obtain independently labelled full-frame camera recordings with suitable
    subject separation. Review lighting, glasses, pose and partial closures.
 3. Run real fitting and validation; inspect error examples and subject breakdowns.

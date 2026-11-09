@@ -51,9 +51,11 @@ evidence reaches any timer.
 ## Optional CNN and fusion
 
 The loader supports a PyTorch checkpoint or ONNX plus its adjacent metadata.
-Arushi's trained artifact was not available during this increment. These paths
-were tested with controlled adapters; actual trained camera inference remains
-blocked by the missing artifact.
+Arushi's trained artifact is now available locally and hash verified. A saved
+CEW face has passed through the application with actual CNN inference, and the
+baseline ONNX export passed a 100-crop conversion parity check. These checks
+verify execution and conversion, not camera accuracy. See
+[the local CNN experiment](MRL_LOCAL_CONTINUATION_2026_11_09.md).
 
 ```powershell
 .\.venv-cognition\Scripts\python.exe scripts/run_cognition.py --camera --display --ear-threshold 0.2 --cnn-checkpoint models/checkpoints/mrl_full_3epoch.pt --cnn-threshold 0.5 --alert-mode ear --max-seconds 90 --output reports/local/camera_cnn_check_01.jsonl
