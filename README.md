@@ -5,6 +5,10 @@ application. The [9 November work record](docs/WORK_RECORD_2026_11_09.md) record
 the interactive camera, tone and speech check, measured timing and remaining
 model/data dependencies. Laptop work is the current priority; Nano tests await cooling.
 
+[Calibration and fusion workflow](docs/FUSION_CALIBRATION_WORKFLOW.md) documents
+the implemented EAR fitter and validation analysis tools. Real camera labels and
+the trained checkpoint are still required before claiming a fusion improvement.
+
 CNN setup and commands: [CNN quickstart](docs/CNN_QUICKSTART.md).
 GitHub audit, dataset status and completion plan: [Cognition plan](docs/COGNITION_PLAN.md).
 Arushi works on `cnn`; Vishruth works on `ear-cognition`.

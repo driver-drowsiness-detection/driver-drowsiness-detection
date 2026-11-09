@@ -109,3 +109,24 @@ local assets. Added optional CNN/comparison adapters so the missing artifact
 does not require rewriting the application later. Used fixed speech for human
 acceptance because it isolates camera/event/audio behavior from generation.
 The local LLM is an optional separately tested enhancement.
+
+## Follow-up: prerequisites for meaningful EAR/CNN fusion
+
+The user asked whether integration improves accuracy and authorized prerequisites
+where evidence was missing. Implemented the two former placeholders:
+calibrate_scores.py now fits the decreasing EAR mapping from calibration eyes;
+tune_fusion.py scores validation crops with a supplied real checkpoint and
+reports fusion candidates, baseline comparisons and coverage. Added supporting
+modules, leakage checks and tests. No camera setting was changed.
+
+Focused suite: 17 tests passed in 12.13 seconds. Tests include the complete CLI
+with a controlled synthetic checkpoint and proof that changing validation labels
+cannot alter the fitted EAR mapping. The full repository suite passed 220 tests
+in 58.13 seconds with the real local landmark asset enabled.
+
+A synthetic demonstration under reports/local/fusion_prerequisites_2026_11_09/
+selected zero CNN weight when given deliberately uninformative CNN scores.
+Fusion had seven usable rows and EAR eight; this difference is retained in the
+report. No synthetic accuracy value is presented as project performance.
+The real model and reviewed camera dataset are still needed for real fitting.
+See FUSION_CALIBRATION_WORKFLOW.md for commands, algorithm walkthrough and gates.

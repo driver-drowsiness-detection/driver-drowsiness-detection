@@ -1,5 +1,15 @@
 # Decision log
 
+## 2026-11-09: calibration and validation before accuracy claims
+
+Used a decreasing regularized logistic EAR fit because raw EAR and CNN scores
+have different directions and scales. Fit only calibration labels; select fusion
+candidates using validation observations with explicit grids and a caller-supplied
+recall target. Included alpha endpoints and no-feasible-candidate reporting so
+fusion is not forced to win. Reported common-subset and standalone coverage.
+Reports remain experimental and do not alter camera settings. Trained artifacts,
+independent labels and a frozen final evaluation remain required.
+
 ## 2026-11-09: prioritize laptop camera integration
 
 The user requested laptop readiness before Nano testing because Nano cooling

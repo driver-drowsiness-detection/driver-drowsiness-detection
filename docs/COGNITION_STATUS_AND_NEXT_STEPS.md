@@ -12,6 +12,12 @@ LLM worker check completed but used fixed fallback wording. See
 [laptop guide](LAPTOP_CAMERA_GUIDE.md) and [work record](WORK_RECORD_2026_11_09.md).
 The older audits below describe historical checkpoints.
 
+The subsequent calibration increment implements the EAR fitter and fusion
+validation analysis scripts. They require reviewed development manifests and
+the trained CNN checkpoint for actual tuning. Their synthetic and regression
+checks passed; no real-data fusion improvement is claimed. See
+[calibration workflow](FUSION_CALIBRATION_WORKFLOW.md).
+
 ## 7 November 2026 update
 
 The October audit below is historical. CNN work through `14ae038` was merged
