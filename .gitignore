@@ -41,5 +41,6 @@ htmlcov/
 *.onnx
 *.engine
 *.task
+/models/llm/
 Thumbs.db
 Desktop.ini

@@ -1,5 +1,17 @@
 # Cognition status and next steps
 
+## 9 November 2026 update
+
+Laptop camera integration now supports optional CNN artifacts, explicit fusion
+settings, selected-mode alerts, fixed speech and a background local LLM path.
+The user confirmed the live EAR warnings matched their closures and that tone
+and speech were audible. A 90 second run processed 2,656 frames with eight
+closure events and eight recoveries. The trained CNN artifact is still absent
+after local and GitHub checks; no CNN camera accuracy is claimed. The separate
+LLM worker check completed but used fixed fallback wording. See
+[laptop guide](LAPTOP_CAMERA_GUIDE.md) and [work record](WORK_RECORD_2026_11_09.md).
+The older audits below describe historical checkpoints.
+
 ## 7 November 2026 update
 
 The October audit below is historical. CNN work through `14ae038` was merged

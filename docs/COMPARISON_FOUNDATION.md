@@ -2,6 +2,10 @@
 
 Date: 7 November 2026.
 
+Update 9 November: the camera adapter and optional artifact loaders are now
+implemented; see LAPTOP_CAMERA_GUIDE.md. Actual trained CNN camera verification
+still awaits the artifact. The original increment record below remains historical.
+
 The user selected comparison and fusion as the next increment. This implements
 the existing Phase 1 experimental weighted combination and strict missing-data
 policy. It does not select a production operating point.

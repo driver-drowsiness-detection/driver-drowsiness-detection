@@ -1,5 +1,17 @@
 # Decision log
 
+## 2026-11-09: prioritize laptop camera integration
+
+The user requested laptop readiness before Nano testing because Nano cooling
+is unavailable. Used the existing EAR pipeline for interactive acceptance and
+added optional model/comparison adapters so missing CNN weights do not block
+the laptop application. Used fixed speech for the first audible camera check;
+local LLM generation remains asynchronous and optional. A live inference
+freshness check occurs before temporal updates. The user confirmed warnings
+matched their closures and that tone and speech were audible. Dataset accuracy,
+camera calibration and Nano evidence remain separate gates. See the dated work
+record for measured results and limitations.
+
 ## 2026-11-07: comparison and fusion foundation
 
 The user selected EAR/CNN comparison and fusion as the next increment. Used

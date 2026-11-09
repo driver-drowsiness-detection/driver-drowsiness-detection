@@ -1,5 +1,10 @@
 # Integrated cognition runtime
 
+Current entry point documentation is in [LAPTOP_CAMERA_GUIDE.md](LAPTOP_CAMERA_GUIDE.md).
+The 9 November update adds optional CNN/comparison adapters, speech and timing
+reports. The EAR camera and audible fixed speech were checked interactively.
+The October implementation notes below retain their original evidence scope.
+
 Implementation update: 23 October 2026. Experimental thresholds are not validated fatigue boundaries.
 
 ## What runs now

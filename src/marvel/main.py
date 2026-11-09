@@ -1,4 +1,4 @@
-"""Application entry point for the implemented EAR cognition path."""
+"""Laptop application entry point with optional CNN comparison and speech."""
 from marvel.runtime import main
 
 

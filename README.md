@@ -1,5 +1,10 @@
 # MARVEL cognition and perception development
 
+Start with the [laptop camera guide](docs/LAPTOP_CAMERA_GUIDE.md) for the current
+application. The [9 November work record](docs/WORK_RECORD_2026_11_09.md) records
+the interactive camera, tone and speech check, measured timing and remaining
+model/data dependencies. Laptop work is the current priority; Nano tests await cooling.
+
 CNN setup and commands: [CNN quickstart](docs/CNN_QUICKSTART.md).
 GitHub audit, dataset status and completion plan: [Cognition plan](docs/COGNITION_PLAN.md).
 Arushi works on `cnn`; Vishruth works on `ear-cognition`.
@@ -18,8 +23,9 @@ images and weights are excluded from Git and must be acquired separately.
 
 [Comparison foundation](docs/COMPARISON_FOUNDATION.md) now provides experimental
 EAR/CNN/fusion estimate replay with strict identity checks, missing evidence,
-independent temporal histories and coverage logs. It requires explicit settings;
-it does not yet connect CNN or fusion to the camera application. The dated
+independent temporal histories and coverage logs. The camera adapter now accepts
+optional CNN artifacts and explicit fusion settings; actual CNN camera validation
+still needs the trained artifact. The dated
 [work record](docs/WORK_RECORD_2026_11_07.md) tracks verification and remaining work.
 
 [Cognition runtime](docs/COGNITION_RUNTIME.md) documents the runnable image/video/camera
@@ -30,7 +36,9 @@ See [temporal controller notes](docs/TEMPORAL_CONTROLLER.md) for event behavior.
 
 The runtime requires an explicit experimental EAR threshold. Its rolling closure
 fraction is not yet validated P80 PERCLOS. Pose requires supplied calibration, and
-CNN/fusion and LLM speech are not yet connected to this application.
+CNN/fusion can be connected with explicit artifacts and settings. Fixed and
+optional LLM speech now consume confirmed events asynchronously. Real CNN/fusion
+accuracy and LLM wording quality remain unvalidated.
 
 ## Existing camera and eye perception
 
