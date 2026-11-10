@@ -1,5 +1,20 @@
 # Cognition status and next steps
 
+## 10 November 2026: first camera recording and review tools
+
+A confirmed participant completed a manually started recording with the preview
+window verified on the desktop. The second session saved 1,739 full frames over
+59.985 seconds, with a 0.078-second maximum saved-frame gap. All images decoded.
+The first attempt is explicitly marked unguided because the user did not see its
+prompts. The recorder now waits for Space before saving images.
+
+A local human-review window is available for the 119 sampled frames (238 eyes),
+with resume support and export checks. This participant is reserved for
+calibration. Human review, class-balance checks, perception preparation and
+separate validation/test participants are still needed before an accuracy claim.
+See [the recording work record](WORK_RECORD_2026_11_10.md) and
+[the collection/review commands](CAMERA_EVALUATION_COLLECTION.md).
+
 ## 9 November 2026: completed local CNN continuation
 
 Arushi's checkpoint is now transferred and hash verified. The official MRL

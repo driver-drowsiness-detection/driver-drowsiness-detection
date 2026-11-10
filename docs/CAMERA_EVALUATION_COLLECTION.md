@@ -1,8 +1,9 @@
 # Laptop camera data needed for the EAR/CNN comparison
 
-This is a proposed collection protocol, not completed accuracy evidence.
-Use it after the MRL CNN experiment. The earlier laptop demonstration saved
-measurements and events but no video, so it cannot be independently relabelled.
+Updated 10 November 2026. A first local participant recording is now available;
+human annotation and separate participants are still required for meaningful
+calibration, validation and final testing. This document is a collection and
+review protocol, not completed camera accuracy evidence.
 
 ## Record inputs that all three methods can share
 
@@ -25,8 +26,70 @@ For each actual participant, collect separate short clips covering:
 
 These are staged eye-state and event checks, not genuine fatigue labels.
 Keep recordings local under data/raw/camera; this folder is ignored by Git.
-The existing run_cognition application does not save video. Use a camera
-recording application and close it before trying the live perception application.
+The existing run_cognition application does not save video. The new
+record_camera_session.py saves full PNG frames, actual camera read-completion
+timestamps, capture frame IDs, a session record and a blank review queue.
+This avoids deriving time from an assumed constant video FPS. It uses the
+existing latest-frame capture worker; some frames can be skipped, and gaps
+must remain visible in analysis. Read-completion time is not sensor exposure time.
+
+## Record with a visible start gate
+
+Close other applications using the camera, then use a new session directory
+and the actual participant's stable anonymous ID:
+
+```powershell
+.\.venv-cognition\Scripts\python.exe scripts/record_camera_session.py data/raw/camera/NEW_SESSION --subject-id ACTUAL_PARTICIPANT_ID --seconds 60
+```
+
+The first window is preview only. No image is saved until the participant
+presses Space in that window. Q or Escape cancels. An unstarted preview times
+out after 120 seconds. During recording, the same keys stop early. A missing
+camera frame for ten seconds fails explicitly and preserves partial evidence.
+The CLI defaults to this start gate; tests can bypass it with controlled frames.
+
+The sixty-second exercise prompts normal blinking, two brief deliberate
+closures and gentle head movement. The participant counts two seconds and
+reopens; do not wait for a new prompt with eyes shut. Prompt timing records
+instructions, never labels. Saved frames are original input without the
+preview text. The preview works on a copy.
+
+Every received image is saved with its timestamp in frames.csv. Approximately
+every half second, two blank eye rows are added to review.csv. Original full
+frames remain available for denser review and later event annotation. PNGs
+use more space than a compressed video: the verified second recording saved
+674,388,072 image bytes for 1,739 frames.
+
+## Human review window
+
+For the current confirmed participant, the chosen partition is calibration.
+Keep every later recording of this same person in that partition; use other
+people for validation and final test. The first capture had no visible prompts
+according to the user and is marked unguided in session_feedback.json. Use
+the second capture for the intended guided-session review:
+
+```powershell
+.\.venv-cognition\Scripts\python.exe scripts/review_camera_session.py data/raw/camera/local_user_001_2026_11_09_session_02/review.csv --reviewer-id local_user_001 --split calibration
+```
+
+The window shows 119 full frames, representing 238 eye observations. It does
+not load or display EAR/CNN predictions or prompt labels. Verify anatomical
+left/right orientation, then use O for both open, C for both closed, or U for
+both uncertain. Separate controls support differing eye states. Click the
+image for an enlarged inspection view. A partial closure or reflection that
+cannot support a clear binary state should remain uncertain.
+
+Each saved decision updates human_review_progress.json and appends to
+human_review_actions.jsonl. Closing and reopening resumes saved decisions.
+The original review.csv is never edited. A queue hash, reviewer ID and fixed
+participant partition prevent resuming the wrong review. Export is blocked
+until every sampled frame is reviewed and orientation is confirmed.
+
+Export writes human_reviewed.csv once. Open is label 0, closed is label 1,
+and uncertain is observable 0 with a blank label. Only explicit human choices
+receive label_source=human and annotation_status=reviewed. The output still
+needs both usable classes before fitting, and invalid perception observations
+must be retained for coverage reporting.
 
 ## Record real identities and split before tuning
 
