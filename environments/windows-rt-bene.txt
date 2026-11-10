@@ -1,0 +1,4 @@
+# Optional offline RT-BENE experiment, after windows-training-gpu.txt.
+# Verified with the existing Python 3.11 and torch 2.14.1 environment.
+--index-url https://download.pytorch.org/whl/cu126
+torchvision==0.29.1+cu126

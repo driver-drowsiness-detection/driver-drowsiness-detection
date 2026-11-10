@@ -147,3 +147,32 @@ See CAMERA_CALIBRATION_DIAGNOSTIC_2026_11_10.md for metrics, hashes, chart,
 limitations and the next target-domain data prerequisite. Source images, labels
 and detailed per-eye scores remain ignored local artifacts. No CNN retraining
 used this calibration participant, and no final test data was scored.
+
+## Public data and transfer learning continuation
+
+The user selected public datasets instead of more teammate recordings. Verified
+the official RT-BENE ResNet18 model checksum, input contracts and anatomical eye
+ordering. Added isolated offline inference and public-data download/training
+scripts with attribution. Installed TorchVision without replacing the existing
+PyTorch version; pip check found no broken requirements.
+
+The official model failed the fixed-cutoff camera and public compatibility checks.
+Both original and aligned crops were tested. An archived-training RGB resize
+variant also failed. These failures remain recorded, not replaced by later results.
+
+Downloaded five checksum-verified public subjects. A five-epoch ImageNet transfer
+pilot trained on 5997 labelled pairs from subjects 3/7/12, selected epoch 2 and
+cutoff 0.948702 on 1810 pairs from subject 15, then evaluated 4549 pairs from
+subject 16. No exact cross-partition pair duplicates were found. The local camera
+participant never supplied gradients or the public cutoff.
+
+Public validation detected 16/42 closures with 7 false positives among 4507 open
+pairs. On 114 reviewed camera pairs, the new CNN detected 2/16 closures, EAR
+detected 10/16, and exploratory OR fusion detected 11/16. All had zero open-pair
+false positives; EAR and fusion each retained two UNKNOWN closed pairs. This is
+one additional detected camera closure, not independently demonstrated fusion
+reliability. No live alert settings changed and no model was deployed to Nano.
+
+See RT_BENE_PUBLIC_DATA_EXPERIMENT_2026_11_10.md for source attribution, experiment
+design, concepts, code map, results and commands. Aggregate evidence is shared in
+docs/evidence; images, detailed scores and checkpoints remain ignored locally.

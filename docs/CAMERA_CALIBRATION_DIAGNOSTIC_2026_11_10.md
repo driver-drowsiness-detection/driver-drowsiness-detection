@@ -3,6 +3,11 @@
 Recorded 10 November 2026. This is a one-participant calibration diagnostic,
 not independent validation, final-test performance or an event-level result.
 
+Subsequent user decision: use public datasets instead of immediate teammate
+recording. The [public-data continuation](RT_BENE_PUBLIC_DATA_EXPERIMENT_2026_11_10.md)
+records a completed pretrained checkpoint diagnostic and a controlled public
+training pilot. Collection recommendations below describe the earlier state.
+
 ## What changed
 
 The user completed the local review of 119 sampled frames and exported 238

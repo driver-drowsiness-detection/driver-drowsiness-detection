@@ -1,5 +1,26 @@
 # Cognition status and next steps
 
+## 10 November 2026: public data replaces immediate teammate collection
+
+The user chose public datasets. Downloaded and checksum-verified the official
+RT-BENE ResNet18 checkpoint and five public subjects. The official checkpoint
+missed all 16 reviewed camera closures at 0.5. A fresh five-epoch pilot used
+ImageNet initialization, public training subjects 3/7/12, calibration subject 15
+and validation subject 16. The camera participant was never used in training.
+
+At the public-selected cutoff, the pilot detected 16/42 validation closures with
+7/4507 open false positives. On 114 reviewed camera pairs it detected 2/16
+closures; EAR detected 10/16; exploratory OR fusion detected 11/16. All three
+had zero false positives among 98 open pairs. EAR and fusion each abstained on
+two closed pairs. This one-extra-frame camera gain is development evidence only.
+
+No live alert configuration changed. Next public-data work needs broader subject
+coverage and independently labelled full-face data to evaluate EAR and fusion;
+eye-only RT-BENE crops cannot supply the project's full-face landmark pipeline.
+See [the full experiment and commands](RT_BENE_PUBLIC_DATA_EXPERIMENT_2026_11_10.md).
+Earlier collection recommendations are superseded by the user's public-data
+choice, not a requirement to recruit teammates now.
+
 ## 10 November 2026: reviewed camera diagnostic exposes CNN failure
 
 Human review and preparation are complete for one calibration participant:
@@ -9,9 +30,10 @@ at 0.5 caught only 1 closure and produced 26 false positives. Its MRL validation
 gain did not transfer to this session. The fitted EAR mapping caught 26 closures
 on its own fitting data; it remains provisional, not independently validated.
 
-No live settings or fusion weights were changed. Next collect separate people
-for RGB CNN development, validation and final testing while retaining this
-participant in calibration. See [the camera diagnostic](CAMERA_CALIBRATION_DIAGNOSTIC_2026_11_10.md).
+No live settings or fusion weights were changed. The original recommendation was
+to collect separate people for RGB development and evaluation. The later public
+data experiment above replaces that immediate plan while retaining this person
+in calibration. See [the camera diagnostic](CAMERA_CALIBRATION_DIAGNOSTIC_2026_11_10.md).
 Earlier sections below describe the intermediate recording and MRL stages.
 
 ## 10 November 2026: first camera recording and review tools
