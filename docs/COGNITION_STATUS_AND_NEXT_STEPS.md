@@ -1,5 +1,19 @@
 # Cognition status and next steps
 
+## 10 November 2026: reviewed camera diagnostic exposes CNN failure
+
+Human review and preparation are complete for one calibration participant:
+196 open, 32 closed and 10 uncertain eyes. On the common 228 observable eyes,
+EAR at 0.2 caught 22 of 32 closures with zero false positives. The new MRL CNN
+at 0.5 caught only 1 closure and produced 26 false positives. Its MRL validation
+gain did not transfer to this session. The fitted EAR mapping caught 26 closures
+on its own fitting data; it remains provisional, not independently validated.
+
+No live settings or fusion weights were changed. Next collect separate people
+for RGB CNN development, validation and final testing while retaining this
+participant in calibration. See [the camera diagnostic](CAMERA_CALIBRATION_DIAGNOSTIC_2026_11_10.md).
+Earlier sections below describe the intermediate recording and MRL stages.
+
 ## 10 November 2026: first camera recording and review tools
 
 A confirmed participant completed a manually started recording with the preview

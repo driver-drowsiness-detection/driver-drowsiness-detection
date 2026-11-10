@@ -1,0 +1,235 @@
+{
+  "status": "single_subject_calibration_diagnostic_not_validation",
+  "manifest_sha256": "8ecb9aab6b0c7696d317dd1e5e53c6110914d93b5a1e58a71c755c83b8bc0e5e",
+  "preparation_metadata_sha256": "05d1f6f6b92374cf3c61af1e5cc7ac5bac14cd7cd5890cf33c8e477bb98f3119",
+  "total_rows": 238,
+  "labelled_rows": 228,
+  "common_labelled_rows": 228,
+  "labels": {
+    "0": 196,
+    "1": 32,
+    "unobservable": 10
+  },
+  "test_evaluated": false,
+  "validation_evaluated": false,
+  "fusion_weights_selected": false,
+  "runtime_settings_changed": false,
+  "ear_calibration": {
+    "slope": -68.02365571160658,
+    "intercept": 16.765849562697486
+  },
+  "ear_fit_evaluated_on_its_own_fitting_data": true,
+  "cnn_checkpoint_sha256": {
+    "cnn_original": "f33202048a72f14e0aeb2aa4d5dae622af036d56619c52e815dca534d8bb75bd",
+    "cnn_10epoch": "92c0fe4bbe1ee6f557eb3885b6819a36e9407207f9e86a38dc07d613c352b780"
+  },
+  "thresholds": {
+    "ear_raw": 0.2,
+    "cnn_raw": 0.5,
+    "fitted_ear_probability": 0.5
+  },
+  "metrics": {
+    "ear_raw_0_2": {
+      "usable_labelled": 228,
+      "coverage": 1.0,
+      "full_usable": {
+        "n": 228,
+        "open": 196,
+        "closed": 32,
+        "tp": 22,
+        "tn": 196,
+        "fp": 0,
+        "fn": 10,
+        "accuracy": 0.956140350877193,
+        "precision_closed": 1.0,
+        "recall_closed": 0.6875,
+        "f1_closed": 0.8148148148148148,
+        "false_positive_rate_open": 0.0
+      },
+      "common": {
+        "n": 228,
+        "open": 196,
+        "closed": 32,
+        "tp": 22,
+        "tn": 196,
+        "fp": 0,
+        "fn": 10,
+        "accuracy": 0.956140350877193,
+        "precision_closed": 1.0,
+        "recall_closed": 0.6875,
+        "f1_closed": 0.8148148148148148,
+        "false_positive_rate_open": 0.0
+      }
+    },
+    "ear_fitted_same_calibration": {
+      "usable_labelled": 228,
+      "coverage": 1.0,
+      "full_usable": {
+        "n": 228,
+        "open": 196,
+        "closed": 32,
+        "tp": 26,
+        "tn": 196,
+        "fp": 0,
+        "fn": 6,
+        "accuracy": 0.9736842105263158,
+        "precision_closed": 1.0,
+        "recall_closed": 0.8125,
+        "f1_closed": 0.896551724137931,
+        "false_positive_rate_open": 0.0
+      },
+      "common": {
+        "n": 228,
+        "open": 196,
+        "closed": 32,
+        "tp": 26,
+        "tn": 196,
+        "fp": 0,
+        "fn": 6,
+        "accuracy": 0.9736842105263158,
+        "precision_closed": 1.0,
+        "recall_closed": 0.8125,
+        "f1_closed": 0.896551724137931,
+        "false_positive_rate_open": 0.0
+      }
+    },
+    "cnn_original": {
+      "usable_labelled": 228,
+      "coverage": 1.0,
+      "full_usable": {
+        "n": 228,
+        "open": 196,
+        "closed": 32,
+        "tp": 2,
+        "tn": 115,
+        "fp": 81,
+        "fn": 30,
+        "accuracy": 0.5131578947368421,
+        "precision_closed": 0.024096385542168676,
+        "recall_closed": 0.0625,
+        "f1_closed": 0.03478260869565218,
+        "false_positive_rate_open": 0.413265306122449
+      },
+      "common": {
+        "n": 228,
+        "open": 196,
+        "closed": 32,
+        "tp": 2,
+        "tn": 115,
+        "fp": 81,
+        "fn": 30,
+        "accuracy": 0.5131578947368421,
+        "precision_closed": 0.024096385542168676,
+        "recall_closed": 0.0625,
+        "f1_closed": 0.03478260869565218,
+        "false_positive_rate_open": 0.413265306122449
+      }
+    },
+    "cnn_10epoch": {
+      "usable_labelled": 228,
+      "coverage": 1.0,
+      "full_usable": {
+        "n": 228,
+        "open": 196,
+        "closed": 32,
+        "tp": 1,
+        "tn": 170,
+        "fp": 26,
+        "fn": 31,
+        "accuracy": 0.75,
+        "precision_closed": 0.037037037037037035,
+        "recall_closed": 0.03125,
+        "f1_closed": 0.03389830508474576,
+        "false_positive_rate_open": 0.1326530612244898
+      },
+      "common": {
+        "n": 228,
+        "open": 196,
+        "closed": 32,
+        "tp": 1,
+        "tn": 170,
+        "fp": 26,
+        "fn": 31,
+        "accuracy": 0.75,
+        "precision_closed": 0.037037037037037035,
+        "recall_closed": 0.03125,
+        "f1_closed": 0.03389830508474576,
+        "false_positive_rate_open": 0.1326530612244898
+      }
+    }
+  },
+  "always_open_reference": {
+    "n": 228,
+    "open": 196,
+    "closed": 32,
+    "tp": 0,
+    "tn": 196,
+    "fp": 0,
+    "fn": 32,
+    "accuracy": 0.8596491228070176,
+    "precision_closed": 0.0,
+    "recall_closed": 0.0,
+    "f1_closed": 0.0,
+    "false_positive_rate_open": 0.0
+  },
+  "participant_count": 1,
+  "fit_diagnostics": {
+    "iterations": 8,
+    "regularization": 0.001,
+    "standardized_ear_mean": 0.29124553208853005,
+    "standardized_ear_scale": 0.07063243441009238,
+    "at_direction_boundary": false,
+    "calibration_quality": {
+      "nll": 0.07808279285940317,
+      "brier": 0.018939799059488255,
+      "ece_10_bins": 0.01888033326345536
+    }
+  },
+  "score_order": {
+    "cnn_original": {
+      "auc_calibration_only": 0.16087372448979592,
+      "closed_score_median": 0.04809681778484401,
+      "open_score_median": 0.4435528946205428,
+      "calibration_95pct_recall_cutoff": 0.002004059870371739,
+      "same_calibration_metrics_at_cutoff": {
+        "n": 228,
+        "open": 196,
+        "closed": 32,
+        "tp": 31,
+        "tn": 6,
+        "fp": 190,
+        "fn": 1,
+        "accuracy": 0.16228070175438597,
+        "precision_closed": 0.14027149321266968,
+        "recall_closed": 0.96875,
+        "f1_closed": 0.2450592885375494,
+        "false_positive_rate_open": 0.9693877551020408
+      }
+    },
+    "cnn_10epoch": {
+      "auc_calibration_only": 0.23772321428571427,
+      "closed_score_median": 0.004678723040163762,
+      "open_score_median": 0.06454685853107806,
+      "calibration_95pct_recall_cutoff": 1.115060105763476e-05,
+      "same_calibration_metrics_at_cutoff": {
+        "n": 228,
+        "open": 196,
+        "closed": 32,
+        "tp": 31,
+        "tn": 6,
+        "fp": 190,
+        "fn": 1,
+        "accuracy": 0.16228070175438597,
+        "precision_closed": 0.14027149321266968,
+        "recall_closed": 0.96875,
+        "f1_closed": 0.2450592885375494,
+        "false_positive_rate_open": 0.9693877551020408
+      }
+    }
+  },
+  "source_report_hashes": {
+    "camera_user_001_session_02_diagnostic.json": "ae113e6836084c9aaa5615d56f1746852ae709e300f3492af7b3cc8fc1824bcf",
+    "camera_user_001_session_02_score_order.json": "bee28fbef6a48ee80c8b0c51e73cebe11485a00e41a5b45e44b3b7efc520d61d",
+    "camera_user_001_session_02_ear_calibration.json": "f1ad8d53bdfad8af4d99a30141d75ac135eec407ee5e21b7108f42f318850f3a"
+  }
+}

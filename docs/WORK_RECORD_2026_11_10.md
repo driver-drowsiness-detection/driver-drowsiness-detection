@@ -112,7 +112,8 @@ resume identity, revision history and overwrite protection.
 The actual recording and review windows were inspected on the desktop. The
 review window was opened for the user at frame 1 of 119 with zero labels saved.
 All recordings and review outputs remain local under ignored data/raw/camera.
-No camera or fusion accuracy has yet been calculated from these recordings.
+No independent validation or fusion accuracy was established by recording alone.
+The subsequent human-labelled calibration diagnostic is recorded below.
 
 ## Engineering lesson
 
@@ -121,3 +122,28 @@ Verify the window and require an observable start action before beginning a
 guided capture. Keep instructions, measured observations and independent truth
 labels separate. A successful recording is a prerequisite for accuracy work,
 not an accuracy result.
+
+## Completed human review, preparation and calibration diagnostic
+
+The user finished all 119 frames and exported the reviewed CSV: 196 open,
+32 closed and 10 uncertain eye observations. The manifest validator accepted
+238 rows for one participant, all assigned to calibration. Perception produced
+238 crops; all 228 observable labels retained usable geometry and crops.
+
+The existing EAR fitter converged on these calibration observations. Its mapping
+is provisional and was not installed in runtime. A fixed-cutoff diagnostic
+compared EAR and both actual CNN checkpoints on the same 228 eyes. EAR detected
+22 of 32 closed eyes with zero open-eye false positives. The original CNN detected
+2 closures with 81 false positives; the new CNN detected 1 with 26 false positives.
+The fitted EAR mapping detected 26 closures with zero false positives on its own
+fitting data. That last result is not independent validation.
+
+Score-order analysis showed that lowering the CNN threshold to catch 31 closures
+would misclassify 190 of 196 open eyes. Inspected two failed crops and their
+full-frame sources; no specific preprocessing implementation fault was established.
+The MRL gains therefore do not justify camera CNN alerts or fusion adoption.
+
+See CAMERA_CALIBRATION_DIAGNOSTIC_2026_11_10.md for metrics, hashes, chart,
+limitations and the next target-domain data prerequisite. Source images, labels
+and detailed per-eye scores remain ignored local artifacts. No CNN retraining
+used this calibration participant, and no final test data was scored.
