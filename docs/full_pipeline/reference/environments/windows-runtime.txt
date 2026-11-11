@@ -1,0 +1,8 @@
+# Candidate requirements, not a verified lock. Resolve on a disposable Python 3.11 venv.
+numpy
+Pillow
+PyYAML
+mediapipe
+# Inspect the MediaPipe installation first. Add only ONE OpenCV distribution
+# if cv2 is missing. Do not install opencv-python alongside opencv-contrib-python.
+# CNN/fusion also require the training environment's PyTorch installation.

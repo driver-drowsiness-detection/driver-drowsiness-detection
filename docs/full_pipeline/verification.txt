@@ -1,0 +1,55 @@
+test_group_leakage (test_core.DataAndLogTests.test_group_leakage) ... ok
+test_json_missing_not_nan (test_core.DataAndLogTests.test_json_missing_not_nan) ... ok
+test_manifest_valid (test_core.DataAndLogTests.test_manifest_valid) ... ok
+test_bad_alpha (test_core.FusionTests.test_bad_alpha) ... ok
+test_bilateral (test_core.FusionTests.test_bilateral) ... ok
+test_mapping_direction (test_core.FusionTests.test_mapping_direction) ... ok
+test_mismatched_identity (test_core.FusionTests.test_mismatched_identity) ... ok
+test_missing_branch_not_zero (test_core.FusionTests.test_missing_branch_not_zero) ... ok
+test_positive_mapping_rejected (test_core.FusionTests.test_positive_mapping_rejected) ... ok
+test_raw_ear_rejected (test_core.FusionTests.test_raw_ear_rejected) ... ok
+test_weighted_mean (test_core.FusionTests.test_weighted_mean) ... ok
+test_degenerate (test_core.GeometryTests.test_degenerate) ... ok
+test_flat_closed_is_valid (test_core.GeometryTests.test_flat_closed_is_valid) ... ok
+test_hand_computation (test_core.GeometryTests.test_hand_computation) ... ok
+test_nonfinite (test_core.GeometryTests.test_nonfinite) ... ok
+test_stable_sigmoid (test_core.GeometryTests.test_stable_sigmoid) ... ok
+test_translation_and_scale (test_core.GeometryTests.test_translation_and_scale) ... ok
+test_wrong_point_count (test_core.GeometryTests.test_wrong_point_count) ... ok
+test_closed_crop_does_not_collapse (test_core.NumericTests.test_closed_crop_does_not_collapse) ... ok
+test_fit_ear_separates_fixture (test_core.NumericTests.test_fit_ear_separates_fixture) ... ok
+test_all_closed_full_window (test_core.RollingTests.test_all_closed_full_window) ... ok
+test_fatigue_policy_undecided (test_core.RollingTests.test_fatigue_policy_undecided) ... ok
+test_rollout_and_track_reset (test_core.RollingTests.test_rollout_and_track_reset) ... ok
+test_sparse_samples_are_not_continuity (test_core.RollingTests.test_sparse_samples_are_not_continuity) ... ok
+test_tier_hysteresis (test_core.RollingTests.test_tier_hysteresis) ... ok
+test_unknown_reduces_coverage (test_core.RollingTests.test_unknown_reduces_coverage) ... ok
+test_hard_timeout (test_core.SpeechTests.test_hard_timeout) ... ok
+test_no_raw_video (test_core.SpeechTests.test_no_raw_video) ... ok
+test_queue_bounded_and_stale_cancelled (test_core.SpeechTests.test_queue_bounded_and_stale_cancelled) ... ok
+test_unsupported_claim (test_core.SpeechTests.test_unsupported_claim) ... ok
+test_valid_output (test_core.SpeechTests.test_valid_output) ... ok
+test_wrong_event (test_core.SpeechTests.test_wrong_event) ... ok
+test_driver_change_not_recovery (test_core.TriggerTests.test_driver_change_not_recovery) ... ok
+test_gap_breaks_closure (test_core.TriggerTests.test_gap_breaks_closure) ... ok
+test_independent_trackers (test_core.TriggerTests.test_independent_trackers) ... ok
+test_nonincreasing_time (test_core.TriggerTests.test_nonincreasing_time) ... ok
+test_normal_blink (test_core.TriggerTests.test_normal_blink) ... ok
+test_one_event_per_continuous_closure (test_core.TriggerTests.test_one_event_per_continuous_closure) ... ok
+test_rearm (test_core.TriggerTests.test_rearm) ... ok
+test_recovery_requires_duration (test_core.TriggerTests.test_recovery_requires_duration) ... ok
+test_threshold_boundary (test_core.TriggerTests.test_threshold_boundary) ... ok
+test_unknown_breaks_closure (test_core.TriggerTests.test_unknown_breaks_closure) ... ok
+test_unknown_does_not_recover (test_core.TriggerTests.test_unknown_does_not_recover) ... ok
+test_unknown_notification_bounded (test_core.TriggerTests.test_unknown_notification_bounded) ... ok
+test_one_to_one_event_matching (test_integration.EventEvaluationTests.test_one_to_one_event_matching) ... ok
+test_calibrate_tune_evaluate_contracts (test_integration.OfflineCLITests.test_calibrate_tune_evaluate_contracts) ... ok
+test_empty_observation_preserves_unknown (test_integration.PipelineTests.test_empty_observation_preserves_unknown) ... ok
+test_three_modes_do_not_share_closure_history (test_integration.PipelineTests.test_three_modes_do_not_share_closure_history) ... ok
+test_forward_backward_checkpoint (test_optional.CNNTests.test_forward_backward_checkpoint) ... skipped 'PyTorch/Pillow unavailable'
+test_saved_crop_preprocess_matches_live (test_optional.ImageTests.test_saved_crop_preprocess_matches_live) ... skipped 'OpenCV/Pillow unavailable'
+
+----------------------------------------------------------------------
+Ran 50 tests in 1.178s
+
+OK (skipped=2)

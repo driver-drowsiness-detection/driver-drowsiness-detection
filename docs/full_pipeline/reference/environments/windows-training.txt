@@ -1,0 +1,3 @@
+-r windows-runtime.txt
+# Install torch separately with the CPU/CUDA choice from the official selector.
+# Then save exact successful versions in reports/environment-lock.txt.

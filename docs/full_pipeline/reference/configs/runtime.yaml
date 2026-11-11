@@ -1,0 +1,43 @@
+# Illustrative development settings. These are not validated driving thresholds.
+mode: ear
+audible_mode: fusion
+capture:
+  kind: camera
+  source: 0
+  declared_cfr_fps: null
+landmarker: models/face_landmarker.task
+driver_roi: [0.0, 0.0, 1.0, 1.0]
+quality:
+  min_crop_pixels: 8
+  brightness_min: 10
+  brightness_max: 245
+  laplacian_min: 0.0
+bundle: null
+device: cpu
+inference_backend: torch
+onnx_path: null
+ear_threshold: 0.20
+temporal:
+  close_s: 1.5
+  recover_s: 0.5
+  max_gap_s: 0.25
+  unavailable_s: 2.0
+window:
+  window_s: 60.0
+  max_gap_s: 0.25
+  min_coverage: 0.8
+fatigue_policy: null
+pose_calibration: null
+max_frame_age_s: 0.5
+max_run_s: 600
+display: true
+sound: false
+tts: disabled
+runs_dir: reports/runs
+llm:
+  enabled: false
+  backend: undecided
+  model: null
+  endpoint: null
+  timeout_s: 3.0
+  ttl_s: 5.0
